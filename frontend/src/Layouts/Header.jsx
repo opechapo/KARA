@@ -1,8 +1,17 @@
 import React from 'react'
+import kara from "../assets/KARA.png"
+
+
 
 const Header = () => {
   return (
-    <div>Header</div>
+    <>
+    <div> 
+      <header>
+        <img src={kara}/>
+      </header>
+    </div>
+    </>
   )
 }
 
