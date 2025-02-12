@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { IoMdMenu, IoMdClose, IoMdPerson, IoMdNotifications, IoMdCart, IoMdPersonAdd } from "react-icons/io";
+import { IoMdNotifications, IoMdCart, IoMdPersonAdd } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
 import kara from "../assets/KARA.png";
-
 
 const navItems = [
   { url: "/stores", title: "Stores" },
@@ -12,11 +11,10 @@ const navItems = [
 
 const Header = () => {
   const location = useLocation();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 w-full bg-white shadow-md z-50 ">
+    <header className="fixed top-0 w-full bg-white z-50 shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 py-3">
         
         {/* Left Section - Logo & Navigation */}
@@ -32,8 +30,8 @@ const Header = () => {
               className="flex items-center space-x-2 text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
               onClick={() => setCategoryOpen(!categoryOpen)}
             >
-              <span>Categories</span>
               <FaBars className="text-xl" />
+              <span>Categories</span>
             </button>
             {categoryOpen && (
               <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md p-4 w-48">
@@ -60,17 +58,25 @@ const Header = () => {
           ))}
         </div>
 
-        {/* Middle Section - Search Bar */}
-        <div className="flex-grow-7 max-w-md">
+        {/* Middle Section - Search Bar with Gradient Border */}
+        <div className="flex-grow max-w-sm ml-auto relative">
           <input
             type="text"
-            placeholder="Search product, and stores"
-            className="w-min p-2 border border-gray-300 rounded-full focus:outline-none  placeholder-gray-500 px-4"
+            placeholder="🔍 Search product, and stores"
+            className="w-full p-2 border-none rounded-full focus:outline-none placeholder-gray-500 px-4 bg-white"
+            style={{
+              border: "1.5px solid transparent",
+              borderRadius: "20px",
+              backgroundImage:
+                "linear-gradient(white, white), linear-gradient(90deg, #FFA5A5 0%, #A044FF 29%, #FFA5A5 73%, #A044FF 100%)",
+              backgroundOrigin: "border-box",
+              backgroundClip: "padding-box, border-box",
+            }}
           />
         </div>
 
         {/* Right Section - User Actions */}
-        <div className="flex items-center space-x-6 text-2xl text-gray-700">
+        <div className="flex items-center space-x-6 text-2xl text-gray-700 ml-6">
           {/* Non-Custodial Login */}
           <button className="hover:text-indigo-600 transition">
             <IoMdPersonAdd />
@@ -81,7 +87,7 @@ const Header = () => {
             <IoMdNotifications />
             {/* Notification Badge */}
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              3
+              0
             </span>
           </button>
 
@@ -90,7 +96,7 @@ const Header = () => {
             <IoMdCart />
             {/* Cart Badge */}
             <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              5
+              0
             </span>
           </button>
         </div>
