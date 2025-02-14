@@ -3,29 +3,23 @@ import { Link } from "react-router-dom";
 import Header from "../Layouts/Header";
 import Footer from "../Layouts/Footer";
 import CategorySideBar from "../Layouts/CategorySideBar";
-import Electronics1 from "../assets/Electronics1.png";
-import Electronics2 from "../assets/Electronics2.png";
-import Electronics3 from "../assets/Electronics3.png";
-import Electronics4 from "../assets/Electronics4.png";
-import Electronics5 from "../assets/Electronics5.png";
-import Electronics6 from "../assets/Electronics6.png";
+import SmartPhone1 from "../assets/SmartPhone1.png";
+import SmartPhone2 from "../assets/SmartPhone2.png";
+import SmartPhone3 from "../assets/SmartPhone3.png";
+import SmartPhone4 from "../assets/SmartPhone4.png";
 
 const subCategories = [
-  { name: "Laptops & Computers", img: Electronics1, link: "/electronics/laptops" },
-  { name: "TV & Projector", img: Electronics2, link: "/electronics/tv-projector" },
-  { name: "Audio & Music Equipment", img: Electronics3, link: "/electronics/audio" },
-  { name: "Cameras", img: Electronics4, link: "/electronics/cameras" },
-  { name: "Printer & Scanner", img: Electronics5, link: "/electronics/printers" },
-  { name: "Video Games & Consoles", img: Electronics6, link: "/electronics/games" },
+  { name: "Mobile Phones", img: SmartPhone1, link: "/smartphones/mobile" },
+  { name: "Tablets", img: SmartPhone2, link: "/smartphones/tablets" },
+  { name: "Smart Watches", img: SmartPhone3, link: "/smartphones/watches" },
+  { name: "Accessories for Phone & Tabs", img: SmartPhone4, link: "/smartphones/accessories" },
 ];
 
-const Electronics = () => {
+const SmartPhoneTab = () => {
   return (
     <>
       <Header />
       <br />
-      
-      
       <br />
       <br />
       <br />
@@ -35,9 +29,9 @@ const Electronics = () => {
           <CategorySideBar />
         </div>
 
-        {/* Electronics Content */}
+        {/* Smart Phone & Tab Content */}
         <div className="w-3/4 px-10 pt-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Electronics</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Smart Phone & Tab</h2>
 
           {/* Subcategories Grid */}
           <div className="grid grid-cols-3 gap-6">
@@ -52,9 +46,9 @@ const Electronics = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
 
-export default Electronics;
+export default SmartPhoneTab;

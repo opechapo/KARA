@@ -18,6 +18,7 @@ import Electronics3 from "./assets/Electronics3.png";
 import Electronics4 from "./assets/Electronics4.png";
 import Electronics5 from "./assets/Electronics5.png";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Footer from "./Layouts/Footer";
 
 
 const storeData = [
@@ -177,16 +178,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-6 mt-12">
-        <div className="container mx-auto flex flex-col md:flex-row justify-between px-6">
-          <p className="text-lg font-semibold">&copy; 2025 KARA . All rights reserved.</p>
-          <nav className="flex space-x-4 mt-4 md:mt-0">
-            <a href="#" className="hover:text-gray-400">Privacy Policy</a>
-            <a href="#" className="hover:text-gray-400">Terms of Service</a>
-            <a href="#" className="hover:text-gray-400">Contact Us</a>
-          </nav>
-        </div>
-      </footer>
+      <Footer/>
     </>
   );
 };
