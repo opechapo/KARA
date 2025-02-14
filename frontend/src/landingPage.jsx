@@ -26,11 +26,11 @@ const storeData = [
 ];
 
 const newArrivals = [
-  { img: NewArrivals1, price: "0.05 ETH", desc: "Stylish Web3 Cap" },
-  { img: NewArrivals2, price: "0.1 ETH", desc: "Blockchain Hoodie" },
-  { img: NewArrivals3, price: "0.08 ETH", desc: "NFT-Inspired Sneakers" },
-  { img: NewArrivals4, price: "0.12 ETH", desc: "Crypto Wallet Bag" },
-  { img: NewArrivals5, price: "0.07 ETH", desc: "Decentralized T-Shirt" },
+  { img: NewArrivals1, price: "0.05 ETH", desc: "Stylish Yahweh Shirt" },
+  { img: NewArrivals2, price: "0.1 ETH", desc: "Single Chair" },
+  { img: NewArrivals3, price: "0.08 ETH", desc: "Pro Sport Bicycle" },
+  { img: NewArrivals4, price: "0.12 ETH", desc: "Ikea Plum" },
+  { img: NewArrivals5, price: "0.07 ETH", desc: "Rayban Black sunglass " },
 ];
 
 const categories = [
@@ -79,7 +79,7 @@ const LandingPage = () => {
           <p className="text-4xl font-bold drop-shadow-lg">
             {storeData[currentIndex].name}
           </p>
-          <button className="mt-4 px-6 py-3 bg-[#A044FF] text-white font-semibold rounded-full shadow-lg hover:bg-purple-700 transition">
+          <button className="mt-4 px-6 py-3 bg-purple-900 text-white font-semibold rounded-full shadow-lg hover:bg-purple-700 transition cursor-pointer">
             Shop Now
           </button>
         </div>
@@ -105,10 +105,10 @@ const LandingPage = () => {
           New Arrivals
         </h2>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-6 pb-4 cursor-pointer scrollbar-hide">
           {newArrivals.map((item, index) => (
             <div key={index} className="min-w-[250px]">
-              <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
+              <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden ">
                 <img
                   src={item.img}
                   alt="New Arrival"
@@ -130,7 +130,7 @@ const LandingPage = () => {
           Categories
         </h2>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-6 pb-4  cursor-pointer scrollbar-hide ">
           {categories.map((category, index) => (
             <div key={index} className="min-w-[250px]">
               <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
@@ -156,7 +156,7 @@ const LandingPage = () => {
           Electronics
         </h2>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4 scrollbar-hide">
+        <div className="flex overflow-x-auto space-x-6 pb-4 cursor-pointer scrollbar-hide">
           {electronics.map((item, index) => (
             <div key={index} className="min-w-[250px]">
               <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
@@ -179,7 +179,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-6 mt-12">
         <div className="container mx-auto flex flex-col md:flex-row justify-between px-6">
-          <p className="text-lg font-semibold">&copy; 2025 KARA. All rights reserved.</p>
+          <p className="text-lg font-semibold">&copy; 2025 KARA . All rights reserved.</p>
           <nav className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="hover:text-gray-400">Privacy Policy</a>
             <a href="#" className="hover:text-gray-400">Terms of Service</a>

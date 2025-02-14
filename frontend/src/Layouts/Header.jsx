@@ -25,9 +25,9 @@ const Header = () => {
           </Link>
 
           {/* Categories with Dropdown */}
-          <div className="relative">
+          <div className="relative ">
             <button 
-              className="flex items-center space-x-2 text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+              className="flex items-center space-x-2 text-lg font-medium text-gray-700 cursor-pointer hover:text-indigo-600 transition"
               onClick={() => setCategoryOpen(!categoryOpen)}
             >
               <FaBars className="text-xl" />
@@ -36,9 +36,11 @@ const Header = () => {
             {categoryOpen && (
               <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md p-4 w-48">
                 <ul className="space-y-2 text-gray-700">
-                  <li><Link to="/category1" className="block hover:text-indigo-600">Category 1</Link></li>
-                  <li><Link to="/category2" className="block hover:text-indigo-600">Category 2</Link></li>
-                  <li><Link to="/category3" className="block hover:text-indigo-600">Category 3</Link></li>
+                  <li><Link to="/category1" className="block hover:text-indigo-600">Electronics</Link></li>
+                  <li><Link to="/category2" className="block hover:text-indigo-600">Smart Phones & Tabs</Link></li>
+                  <li><Link to="/category3" className="block hover:text-indigo-600">Vehicles</Link></li>
+                  <li><Link to="/category3" className="block hover:text-indigo-600">Fashion</Link></li>
+                  <li><Link to="/category3" className="block hover:text-indigo-600">Home & Gardens</Link></li>
                 </ul>
               </div>
             )}
@@ -78,12 +80,12 @@ const Header = () => {
         {/* Right Section - User Actions */}
         <div className="flex items-center space-x-6 text-2xl text-gray-700 ml-6">
           {/* Non-Custodial Login */}
-          <button className="hover:text-indigo-600 transition">
+          <button className="hover:text-indigo-600 cursor-pointer transition">
             <IoMdPersonAdd />
           </button>
 
           {/* Notifications Bell */}
-          <button className="relative hover:text-indigo-600 transition">
+          <button className="relative hover:text-indigo-600 cursor-pointer transition">
             <IoMdNotifications />
             {/* Notification Badge */}
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -92,11 +94,11 @@ const Header = () => {
           </button>
 
           {/* Shopping Cart */}
-          <button className="relative hover:text-indigo-600 transition">
+          <button className="relative hover:text-indigo-600 cursor-pointer transition">
             <IoMdCart />
             {/* Cart Badge */}
             <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              0
+              4
             </span>
           </button>
         </div>
