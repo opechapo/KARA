@@ -36,11 +36,11 @@ const Header = () => {
             {categoryOpen && (
               <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md p-4 w-48">
                 <ul className="space-y-2 text-gray-700">
-                  <li><Link to="/category1" className="block hover:text-indigo-600">Electronics</Link></li>
-                  <li><Link to="/category2" className="block hover:text-indigo-600">Smart Phones & Tabs</Link></li>
-                  <li><Link to="/category3" className="block hover:text-indigo-600">Vehicles</Link></li>
-                  <li><Link to="/category3" className="block hover:text-indigo-600">Fashion</Link></li>
-                  <li><Link to="/category3" className="block hover:text-indigo-600">Home & Gardens</Link></li>
+                  <li><Link to="/electronics" className="block hover:text-indigo-600">Electronics</Link></li>
+                  <li><Link to="/smartphonetab" className="block hover:text-indigo-600">Smart Phones & Tabs</Link></li>
+                  <li><Link to="/vehicles" className="block hover:text-indigo-600">Vehicles</Link></li>
+                  <li><Link to="/fashion" className="block hover:text-indigo-600">Fashion</Link></li>
+                  <li><Link to="/home&garden" className="block hover:text-indigo-600">Home & Gardens</Link></li>
                 </ul>
               </div>
             )}

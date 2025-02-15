@@ -19,11 +19,11 @@ import Electronics4 from "./assets/Electronics4.png";
 import Electronics5 from "./assets/Electronics5.png";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Footer from "./Layouts/Footer";
-
+import { Link } from "react-router-dom";
 
 const storeData = [
-  { img: EnnyCapStore, name: "EnnyCap Store" },
-  { img: AnotherStore, name: "Another Store" },
+  { img: AnotherStore, name: "Smadeh Store" },
+  { img: EnnyCapStore, name: "Another Store" },
 ];
 
 const newArrivals = [
@@ -35,11 +35,11 @@ const newArrivals = [
 ];
 
 const categories = [
-  { img: Categories1, name: "Vehicles" },
-  { img: Categories2, name: "Smartphones & Tablets" },
-  { img: Categories3, name: "Home & Gardens" },
-  { img: Categories4, name: "Fashion" },
-  { img: Categories5, name: "Electronics" },
+  { img: Categories1, name: "Vehicles", link: "/vehicles" },
+  { img: Categories2, name: "Smartphones & Tablets", link: "/smartphonetab" },
+  { img: Categories3, name: "Home & Gardens", link: "/home&garden" },
+  { img: Categories4, name: "Fashion", link: "/fashion" },
+  { img: Categories5, name: "Electronics", link: "/electronics" },
 ];
 
 const electronics = [
@@ -87,7 +87,7 @@ const LandingPage = () => {
 
         <button
           onClick={handlePrev}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2  bg-opacity-50 p-3 rounded-full cursor-pointer text-white hover:bg-opacity-70 transition"
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-opacity-50 p-3 rounded-full cursor-pointer text-white hover:bg-opacity-70 transition"
         >
           <IoIosArrowBack size={40} />
         </button>
@@ -109,7 +109,7 @@ const LandingPage = () => {
         <div className="flex overflow-x-auto space-x-6 pb-4 cursor-pointer scrollbar-hide">
           {newArrivals.map((item, index) => (
             <div key={index} className="min-w-[250px]">
-              <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden ">
+              <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
                 <img
                   src={item.img}
                   alt="New Arrival"
@@ -126,27 +126,23 @@ const LandingPage = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="container mx-auto my-12 px-6 ">
+      <section className="container mx-auto my-12 px-6">
         <h2 className="text-3xl font-bold text-left text-gray-800 mb-6">
           Categories
         </h2>
 
-        <div className="flex overflow-x-auto space-x-6 pb-4  cursor-pointer scrollbar-hide ">
+        <div className="flex overflow-x-auto space-x-6 pb-4 cursor-pointer scrollbar-hide">
           {categories.map((category, index) => (
-            <div key={index} className="min-w-[250px]">
-              <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
-                <img
-                  src={category.img}
-                  alt="Category"
-                  className="w-full h-full object-cover"
-                />
+            <Link to={category.link} key={index}>
+              <div className="min-w-[250px]">
+                <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
+                  <img src={category.img} alt="Category" className="w-full h-full object-cover" />
+                </div>
+                <div className="bg-white p-4 shadow-md rounded-lg mt-2">
+                  <p className="text-lg font-semibold text-gray-900">{category.name}</p>
+                </div>
               </div>
-              <div className="bg-white p-4 shadow-md rounded-lg mt-2">
-                <p className="text-lg font-semibold text-gray-900">
-                  {category.name}
-                </p>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -161,16 +157,10 @@ const LandingPage = () => {
           {electronics.map((item, index) => (
             <div key={index} className="min-w-[250px]">
               <div className="w-60 h-60 bg-gray-100 rounded-lg overflow-hidden">
-                <img
-                  src={item.img}
-                  alt="Electronics"
-                  className="w-full h-full object-cover"
-                />
+                <img src={item.img} alt="Electronics" className="w-full h-full object-cover" />
               </div>
               <div className="bg-white p-4 shadow-md rounded-lg mt-2">
-                <p className="text-lg font-semibold text-gray-900">
-                  {item.name}
-                </p>
+                <p className="text-lg font-semibold text-gray-900">{item.name}</p>
               </div>
             </div>
           ))}
@@ -178,7 +168,7 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <Footer/>
+      <Footer />
     </>
   );
 };

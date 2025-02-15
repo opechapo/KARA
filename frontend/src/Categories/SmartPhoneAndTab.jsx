@@ -31,7 +31,7 @@ const SmartPhoneTab = () => {
 
         {/* Smart Phone & Tab Content */}
         <div className="w-3/4 px-10 pt-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Smart Phone & Tab</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Smart Phone & Tabs</h2>
 
           {/* Subcategories Grid */}
           <div className="grid grid-cols-3 gap-6">
