@@ -8,6 +8,7 @@ import SmartPhoneTab from './Categories/SmartPhoneAndTab';
 import Vehicles from './Categories/Vehicles';
 import Fashion from './Categories/Fashion';
 import HomeGardens from './Categories/Home&Garden';
+import AboutUs from './Layouts/Pages/AboutUs';
 
 function App() {
   const RenderRoute = () => (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/vehicles" element={<Vehicles />} />
       <Route path="/fashion" element={<Fashion />} />
       <Route path="/home&garden" element={<HomeGardens />} />
+      <Route path="/aboutus" element={<AboutUs />} />
       
       
     </Routes>

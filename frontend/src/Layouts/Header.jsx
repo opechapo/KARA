@@ -5,8 +5,8 @@ import { FaBars } from "react-icons/fa";
 import kara from "../assets/KARA.png";
 
 const navItems = [
-  { url: "/stores", title: "Stores" },
-  { url: "/about", title: "About Us" },
+  { title: "Stores", link: "#" },
+  {  title: "About Us", link: "/aboutus" },
 ];
 
 const Header = () => {
@@ -47,12 +47,12 @@ const Header = () => {
           </div>
 
           {/* Stores & About Us Links */}
-          {navItems.map(({ url, title }, index) => (
+          {navItems.map(({ link, title }, index) => (
             <Link
               key={index}
-              to={url}
+              to={link}
               className={`text-lg font-medium text-gray-700 hover:text-indigo-600 transition ${
-                location.pathname === url ? "text-indigo-700 font-semibold" : ""
+                location.pathname === link ? "text-indigo-700 font-semibold" : ""
               }`}
             >
               {title}
