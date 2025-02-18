@@ -6,6 +6,7 @@ import kara from "../assets/KARA.png";
 
 const navItems = [
   { title: "Stores", link: "#" },
+  { title: "Collections", link: "#" },
   {  title: "About Us", link: "/aboutus" },
 ];
 
