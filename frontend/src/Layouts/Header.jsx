@@ -85,7 +85,7 @@ const Header = () => {
             <IoMdPersonAdd />
           </button>
 
-          {/* Notifications Bell */}
+          {/* Notification*/}
           <button className="relative hover:text-indigo-600 cursor-pointer transition">
             <IoMdNotifications />
             {/* Notification Badge */}
