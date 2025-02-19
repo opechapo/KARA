@@ -11,7 +11,7 @@ import Vehicle5 from "../assets/Vehicle5.png";
 
 
 const subCategories = [
-  { name: "Cars", img: Vehicle1, link: "/vehicles/cars" },
+  { name: "Cars", img: Vehicle1, link: "/cars" },
   { name: "Bus & Minibus", img: Vehicle2, link: "/vehicles/bus-minibus" },
   { name: "Motorcycle & Tricycle", img: Vehicle3, link: "/vehicles/motorcycle-tricycle" },
   { name: "Trucks & Trailers", img: Vehicle4, link: "/vehicles/trucks-trailers" },

@@ -4,16 +4,12 @@ import Header from '../Layouts/Header';
 import CarsCategorySideBar from '../Layouts/Pages/CarsCategorySideBar';
 import CategorySideBar from '../Layouts/CategorySideBar';
 import Footer from '../Layouts/Footer';
-
-// Import car logos
 import toyotaLogo from '../assets/toyotaLogo.png';
 import mercedesLogo from '../assets/mercedesLogo.png';
 import roverLogo from '../assets/roverLogo.png';
 import bmwLogo from '../assets/bmwLogo.png';
 import ferarriLogo from '../assets/ferarriLogo.png';
 import teslaLogo from '../assets/teslaLogo.png';
-
-// Import car images for sale
 import mercedesGwagon from '../assets/mercedesGwagon.png';
 import toyotaYaris from '../assets/toyotaYaris.png';
 import landRover from '../assets/landRover.png';
@@ -39,6 +35,7 @@ const carsForSale = [
     description: "Luxury off-road SUV with V8 engine.",
     store: "Elite Auto",
     collection: "Luxury Vehicles",
+    link: "/mercedesgwagon" 
   },
   {
     id: "toyota-yaris",
@@ -126,7 +123,7 @@ const Cars = () => {
               <div
                 key={index}
                 className="bg-gray-100 p-4 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition"
-                onClick={() => navigate(`/cars/details/${car.id}`)}
+                onClick={() => navigate(`${car.link}`)}
               >
                 {/* Car Image */}
                 <div className="w-full h-48 flex items-center justify-center">

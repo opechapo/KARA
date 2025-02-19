@@ -10,6 +10,7 @@ import Fashion from './Categories/Fashion';
 import HomeGardens from './Categories/Home&Garden';
 import AboutUs from './Layouts/Pages/AboutUs';
 import Cars from './Categories/Cars';
+import MercedesGwagon from './Categories/Cars/MercedesGwagon';
 
 function App() {
   const RenderRoute = () => (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/home&garden" element={<HomeGardens />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/cars" element={<Cars />} />
+      <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       
       
     </Routes>
