@@ -6,6 +6,7 @@ import mercedesGwagon2 from "../../assets/Gwagon2.png";
 import mercedesGwagon3 from "../../assets/Gwagon3.png";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import Footer from "../../Layouts/Footer";
 
 
 const images = [mercedesGwagon1, mercedesGwagon2, mercedesGwagon3];
@@ -24,7 +25,9 @@ const MercedesGwagon = () => {
   };
 
   return (
+   <>
     <div className="min-h-screen flex items-center justify-center p-8 bg-gray-100">
+
        {/* Back Button */}
        <motion.button
         className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-200 transition"
@@ -35,7 +38,9 @@ const MercedesGwagon = () => {
       >
         <ArrowLeft size={24} />
       </motion.button>
+      
       <div className="bg-white shadow-lg rounded-lg flex w-full max-w-5xl p-6">
+
         {/* Image Section */}
         <div className="w-2/3 relative">
           <img
@@ -43,6 +48,7 @@ const MercedesGwagon = () => {
             alt="Mercedes G-Wagon"
             className="w-full h-[400px] object-cover rounded-lg"
           />
+
           {/* Navigation Buttons */}
           <button
             onClick={handlePrev}
@@ -59,6 +65,7 @@ const MercedesGwagon = () => {
 
            {/* Vehicle Description */}
            <div className="mt-6 p-4  rounded-lg">
+
             {/* <h3 className="text-lg font-semibold">Vehicle Description</h3> */}
             <p className="text-gray-600 mt-2">
               The Mercedes G-Wagon is an iconic luxury SUV known for its rugged durability and powerful V8 engine.
@@ -76,6 +83,7 @@ const MercedesGwagon = () => {
             <p className="text-gray-600">Luxury off-road SUV with V8 engine.</p>
             <p className="text-gray-500 mt-2 font-semibold">Store: Elite Auto</p>
             <hr className="my-4" />
+
             {/* Quantity Selector */}
             <div className="flex items-center space-x-4">
               <button
@@ -118,11 +126,14 @@ const MercedesGwagon = () => {
           
          
         </div>
-      </div>
+      </div> 
     </div>
-      // {/* Footer */}
-      // <Footer />
+     {/* Footer */}
+     <Footer />
+   </>
+    
   );
+  
 };
 
 export default MercedesGwagon;

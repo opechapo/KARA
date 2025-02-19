@@ -65,7 +65,7 @@ const Header = () => {
         <div className="flex-grow max-w-sm ml-auto relative">
           <input
             type="text"
-            placeholder="🔍 Search product, and stores"
+            placeholder=" Search product, and stores"
             className="w-full p-2 border-none rounded-full focus:outline-none placeholder-gray-500 px-4 bg-white"
             style={{
               border: "1.5px solid transparent",

@@ -12,8 +12,9 @@ const vehicleCategories = [
 const CarsCategorySideBar = () => {
   return (
     <div className="w-64 bg-white shadow-lg rounded-lg p-4">
+
       {/* Categories Header */}
-      <h2 className="text-xl font-bold text-white bg-blue-600 p-1 rounded-md text-center">
+      <h2 className="text-xl font-bold text-white bg-purple-900 p-2 rounded-md text-center ">
         Categories
       </h2>
 

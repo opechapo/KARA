@@ -35,7 +35,7 @@ const carsForSale = [
     description: "Luxury off-road SUV with V8 engine.",
     store: "Elite Auto",
     collection: "Luxury Vehicles",
-    link: "/mercedesgwagon" 
+    link: "/MercedesGwagon" 
   },
   {
     id: "toyota-yaris",
