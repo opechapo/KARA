@@ -33,7 +33,7 @@ const carsForSale = [
     price: "2.5 ETH",
     brand: "Mercedes G-Wagon",
     description: "Luxury off-road SUV with V8 engine.",
-    store: "Elite Auto",
+    store: "Cubanna Autos",
     collection: "Luxury Vehicles",
     link: "/MercedesGwagon" 
   },
@@ -122,7 +122,7 @@ const Cars = () => {
             {carsForSale.map((car, index) => (
               <div
                 key={index}
-                className="bg-gray-100 p-4 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition"
+                className="bg-gray-100  rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition"
                 onClick={() => navigate(`${car.link}`)}
               >
                 {/* Car Image */}
@@ -131,7 +131,7 @@ const Cars = () => {
                 </div>
 
                 {/* Car Details */}
-                <div className="bg-white p-3 mt-4 rounded-lg">
+                <div className="bg-white p-3 ">
                   <p className="text-lg font-bold text-blue-600">{car.price}</p>
                   <p className="text-gray-800 font-semibold">{car.brand}</p>
                   <p className="text-gray-600 text-sm">{car.description}</p>
