@@ -5,8 +5,8 @@ import { FaBars } from "react-icons/fa";
 import kara from "../assets/KARA.png";
 
 const navItems = [
-  { title: "Stores", link: "#" },
-  { title: "Collections", link: "#" },
+  { title: "Stores", link: "/stores" },
+  { title: "Collections", link: "/collections" },
   {  title: "About Us", link: "/aboutus" },
 ];
 
@@ -28,7 +28,7 @@ const Header = () => {
           {/* Categories with Dropdown */}
           <div className="relative ">
             <button 
-              className="flex items-center space-x-2 text-lg font-medium text-gray-700 cursor-pointer hover:text-indigo-600 transition"
+              className="flex items-center space-x-2 text-lg font-medium text-gray-700 cursor-pointer hover:text-purple-600 transition"
               onClick={() => setCategoryOpen(!categoryOpen)}
             >
               <FaBars className="text-xl" />
@@ -37,11 +37,11 @@ const Header = () => {
             {categoryOpen && (
               <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md p-4 w-48">
                 <ul className="space-y-2 text-gray-700">
-                  <li><Link to="/electronics" className="block hover:text-indigo-600">Electronics</Link></li>
-                  <li><Link to="/smartphonetab" className="block hover:text-indigo-600">Smart Phones & Tabs</Link></li>
-                  <li><Link to="/vehicles" className="block hover:text-indigo-600">Vehicles</Link></li>
-                  <li><Link to="/fashion" className="block hover:text-indigo-600">Fashion</Link></li>
-                  <li><Link to="/home&garden" className="block hover:text-indigo-600">Home & Gardens</Link></li>
+                  <li><Link to="/electronics" className="block hover:text-purple-600">Electronics</Link></li>
+                  <li><Link to="/smartphonetab" className="block hover:text-purple-600">Smart Phones & Tabs</Link></li>
+                  <li><Link to="/vehicles" className="block hover:text-purple-600">Vehicles</Link></li>
+                  <li><Link to="/fashion" className="block hover:text-purple-600">Fashion</Link></li>
+                  <li><Link to="/home&garden" className="block hover:text-purple-600">Home & Gardens</Link></li>
                 </ul>
               </div>
             )}
@@ -52,8 +52,8 @@ const Header = () => {
             <Link
               key={index}
               to={link}
-              className={`text-lg font-medium text-gray-700 hover:text-indigo-600 transition ${
-                location.pathname === link ? "text-indigo-700 font-semibold" : ""
+              className={`text-lg font-medium text-gray-700 hover:text-purple-600 transition ${
+                location.pathname === link ? "text-purple-700 font-semibold" : ""
               }`}
             >
               {title}
@@ -81,12 +81,12 @@ const Header = () => {
         {/* Right Section - User Actions */}
         <div className="flex items-center space-x-6 text-2xl text-gray-700 ml-6">
           {/* Non-Custodial Login */}
-          <button className="hover:text-indigo-600 cursor-pointer transition">
+          <button className="hover:text-purple-600 cursor-pointer transition">
             <IoMdPersonAdd />
           </button>
 
           {/* Notification*/}
-          <button className="relative hover:text-indigo-600 cursor-pointer transition">
+          <button className="relative hover:text-purple-600 cursor-pointer transition">
             <IoMdNotifications />
             {/* Notification Badge */}
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -95,10 +95,10 @@ const Header = () => {
           </button>
 
           {/* Shopping Cart */}
-          <button className="relative hover:text-indigo-600 cursor-pointer transition">
+          <button className="relative hover:text-purple-600 cursor-pointer transition">
             <IoMdCart />
             {/* Cart Badge */}
-            <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+            <span className="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
               4
             </span>
           </button>

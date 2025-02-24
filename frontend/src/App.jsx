@@ -11,6 +11,8 @@ import HomeGardens from './Categories/Home&Garden';
 import AboutUs from './Layouts/Pages/AboutUs';
 import Cars from './Categories/Cars';
 import MercedesGwagon from './Categories/Cars/MercedesGwagon';
+import Stores from './Layouts/Pages/Stores';
+import Collections from './Layouts/Pages/Collections';
 
 function App() {
   const RenderRoute = () => (
@@ -24,6 +26,8 @@ function App() {
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/cars" element={<Cars />} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
+      <Route path="/stores" element={<Stores />} />
+      <Route path="/collections" element={<Collections />} />
       
       
     </Routes>
