@@ -10,9 +10,10 @@ import Fashion from './Categories/Fashion';
 import HomeGardens from './Categories/Home&Garden';
 import AboutUs from './Layouts/Pages/AboutUs';
 import Cars from './Categories/Cars';
-import MercedesGwagon from './Categories/Cars/MercedesGwagon';
+import MercedesGwagon from './Categories/Cars/mercedesGwagon';
 import Stores from './Layouts/Pages/Stores';
 import Collections from './Layouts/Pages/Collections';
+import CubannaAutosStores from './Categories/Stores/CubannaAutosStores';
 
 function App() {
   const RenderRoute = () => (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />
+      <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
       
       
     </Routes>
