@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import React from "react";
+import Header from "../Header";
+import Footer from "../Footer";
 
 export default function AboutUs() {
   return (
-    <div className="max-w-4xl mx-auto p-6 relative">
+   <>
+   {/* Header */}
+    <Header />
+    <div className=" mt-16 max-w-4xl mx-auto p-6 relative">
       {/* Back Button */}
       <motion.button
         className="absolute top-4 left-4 p-2 rounded-full hover:bg-gray-200 transition"
@@ -54,5 +59,8 @@ export default function AboutUs() {
         </div>
       </div>
     </div>
+    {/* Footer */}
+    <Footer/>
+   </>
   );
 }

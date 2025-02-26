@@ -1,19 +1,22 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Header from './Layouts/Header';
-import LandingPage from './landingPage';
-import React from 'react';
-import Electronics from './Categories/Electronics';
-import SmartPhoneTab from './Categories/SmartPhoneAndTab';
-import Vehicles from './Categories/Vehicles';
-import Fashion from './Categories/Fashion';
-import HomeGardens from './Categories/Home&Garden';
-import AboutUs from './Layouts/Pages/AboutUs';
-import Cars from './Categories/Cars';
-import MercedesGwagon from './Categories/Cars/mercedesGwagon';
-import Stores from './Layouts/Pages/Stores';
-import Collections from './Layouts/Pages/Collections';
-import CubannaAutosStores from './Categories/Stores/CubannaAutosStores';
+import LandingPage from "./landingPage";
+import React from "react";
+import Electronics from "./Categories/Electronics";
+import SmartPhoneTab from "./Categories/SmartPhoneAndTab";
+import Vehicles from "./Categories/Vehicles";
+import Fashion from "./Categories/Fashion";
+import HomeGardens from "./Categories/Home&Garden";
+import AboutUs from "./Layouts/Pages/AboutUs";
+import Cars from "./Categories/Vehicles/Cars/Cars";
+// import MercedesGwagon from './Categories/Cars/mercedesGwagon';
+import MercedesGwagon from "./Categories/Vehicles/Cars/MercedesGwagon";
+import Stores from "./Layouts/Pages/Stores";
+import Collections from "./Layouts/Pages/Collections";
+import CubannaAutosStores from "./Categories/Stores/CubannaAutosStores";
+import BusAndMinibus from "./Categories/Vehicles/BusAndMiniBus/BusAndMinibus";
+import MotorcycleAndTricycle from "./Categories/Vehicles/MotorcycleAndTricycle/MotorcycleAndTricycle";
 
 function App() {
   const RenderRoute = () => (
@@ -26,21 +29,16 @@ function App() {
       <Route path="/home&garden" element={<HomeGardens />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/cars" element={<Cars />} />
+      <Route path="/bus&minibus" element={<BusAndMinibus />} />
+      <Route path="/motorcycleandtricycle" element={<MotorcycleAndTricycle/>} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
-      
-      
     </Routes>
   );
 
-  return (
-    <Router>
-      
-      {RenderRoute()}
-    </Router>
-  );
+  return <Router>{RenderRoute()}</Router>;
 }
 
 export default App;

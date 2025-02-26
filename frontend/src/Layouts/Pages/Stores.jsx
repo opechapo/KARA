@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Header";
 
 const stores = [
-  { name: "Cubanna Autos", link: "#" },
+  { name: "Cubanna Autos", link: "/cubannaautosstores" },
   { name: "Smadeh Store", link: "#" },
   { name: "Emeka & Sons Electronics", link: "#" },
 ];

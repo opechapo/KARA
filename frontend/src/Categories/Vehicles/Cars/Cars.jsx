@@ -1,29 +1,26 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Header from '../Layouts/Header';
-import CarsCategorySideBar from '../Layouts/Pages/CarsCategorySideBar';
-import CategorySideBar from '../Layouts/CategorySideBar';
-import Footer from '../Layouts/Footer';
-import toyotaLogo from '../assets/toyotaLogo.png';
-import mercedesLogo from '../assets/mercedesLogo.png';
-import roverLogo from '../assets/roverLogo.png';
-import bmwLogo from '../assets/bmwLogo.png';
-import ferarriLogo from '../assets/ferarriLogo.png';
-import teslaLogo from '../assets/teslaLogo.png';
-import mercedesGwagon from '../assets/mercedesGwagon.png';
-import toyotaYaris from '../assets/toyotaYaris.png';
-import landRover from '../assets/landRover.png';
-import lexusJeep from '../assets/lexusJeep.png';
-import toyotaCivic from '../assets/toyotaCivic.png';
-import teslaModel from '../assets/tesla.png';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../../../Layouts/Header";
+import CarsCategorySideBar from "../../../Layouts/Pages/CarsCategorySideBar";
+import CategorySideBar from "../../../Layouts/CategorySideBar";
+import Footer from "../../../Layouts/Footer";
+import toyotaLogo from "../../../assets/toyotaLogo.png";
+import mercedesLogo from "../../../assets/mercedesLogo.png";
+import roverLogo from "../../../assets/roverLogo.png";
+import mercedesGwagon from "../../../assets/mercedesGwagon.png";
+import toyotaYaris from "../../../assets/toyotaYaris.png";
+import landRover from "../../../assets/landRover.png";
+import lexusJeep from "../../../assets/lexusJeep.png";
+import toyotaCivic from "../../../assets/toyotaCivic.png";
+import teslaModel from "../../../assets/tesla.png";
 
 const carBrands = [
   { name: "Toyota", logo: toyotaLogo, link: "/cars/toyota" },
   { name: "Mercedes Benz", logo: mercedesLogo, link: "/cars/mercedes" },
   { name: "Rover", logo: roverLogo, link: "/cars/rover" },
-  { name: "BMW", logo: bmwLogo, link: "/cars/bmw" },
-  { name: "Ferarri", logo: ferarriLogo, link: "/cars/ferarri" },
-  { name: "Tesla", logo: teslaLogo, link: "/cars/tesla" },
+  // { name: "BMW", logo: bmwLogo, link: "/cars/bmw" },
+  // { name: "Ferarri", logo: ferarriLogo, link: "/cars/ferarri" },
+  // { name: "Tesla", logo: teslaLogo, link: "/cars/tesla" },
 ];
 
 const carsForSale = [
@@ -35,7 +32,7 @@ const carsForSale = [
     description: "Luxury off-road SUV with V8 engine.",
     store: "Cubanna Autos",
     collection: "Luxury Vehicles",
-    link: "/MercedesGwagon" 
+    link: "/MercedesGwagon",
   },
   {
     id: "toyota-yaris",
@@ -90,7 +87,7 @@ const Cars = () => {
   return (
     <>
       <Header />
-      <div className="flex min-h-screen px-6 py-4 mt-16">
+      <div className="flex min-h-screen px-3 py-4 mt-16">
         {/* Sidebar */}
         <div className="w-1/4 min-h-screen border-r border-gray-300">
           <CarsCategorySideBar />
@@ -103,11 +100,19 @@ const Cars = () => {
           <h1 className="text-2xl font-bold mb-4">Cars:</h1>
 
           {/* Car Logos Grid */}
-          <div className="grid grid-cols-6 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
             {carBrands.map((car, index) => (
-              <Link to={car.link} key={index} className="flex flex-col items-center">
+              <Link
+                to={car.link}
+                key={index}
+                className="flex flex-col items-center"
+              >
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition duration-300">
-                  <img src={car.logo} alt={car.name} className="w-16 h-16 object-contain" />
+                  <img
+                    src={car.logo}
+                    alt={car.name}
+                    className="w-16 h-16 object-contain"
+                  />
                 </div>
                 <p className="mt-2 text-gray-700 font-medium hover:text-blue-600 transition duration-300">
                   {car.name}
@@ -127,7 +132,11 @@ const Cars = () => {
               >
                 {/* Car Image */}
                 <div className="w-full h-48 flex items-center justify-center">
-                  <img src={car.image} alt={car.brand} className="w-full h-full object-cover rounded-lg" />
+                  <img
+                    src={car.image}
+                    alt={car.brand}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
                 </div>
 
                 {/* Car Details */}
@@ -135,8 +144,13 @@ const Cars = () => {
                   <p className="text-lg font-bold text-blue-600">{car.price}</p>
                   <p className="text-gray-800 font-semibold">{car.brand}</p>
                   <p className="text-gray-600 text-sm">{car.description}</p>
-                  <p className="text-gray-500 text-xs mt-2">Store: <span className="font-semibold">{car.store}</span></p>
-                  <p className="text-gray-500 text-xs">Collection: <span className="font-semibold">{car.collection}</span></p>
+                  <p className="text-gray-500 text-xs mt-2">
+                    Store: <span className="font-semibold">{car.store}</span>
+                  </p>
+                  <p className="text-gray-500 text-xs">
+                    Collection:{" "}
+                    <span className="font-semibold">{car.collection}</span>
+                  </p>
                 </div>
               </div>
             ))}
