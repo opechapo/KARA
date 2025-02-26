@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import Footer from "../../Layouts/Footer";
 import { Link } from "react-router-dom";
+import Header from "../../Layouts/Header";
 
 
 const images = [mercedesGwagon1, mercedesGwagon2, mercedesGwagon3];
@@ -27,6 +28,10 @@ const MercedesGwagon = () => {
 
   return (
    <>
+   {/* Header*/}
+  <div className="mt-12">
+  <Header/>
+  </div>
     <div className="min-h-screen flex items-center justify-center p-8 bg-gray-100">
 
        {/* Back Button */}
