@@ -3,23 +3,20 @@ import { Link } from "react-router-dom";
 import Header from "../Layouts/Header";
 import Footer from "../Layouts/Footer";
 import CategorySideBar from "../Layouts/CategorySideBar";
-import Vehicle1 from "../assets/Vehicle1.png";
-import Vehicle2 from "../assets/Vehicle2.png";
-import Vehicle3 from "../assets/Vehicle3.png";
-import Vehicle4 from "../assets/Vehicle4.png";
-import Vehicle5 from "../assets/Vehicle5.png";
+import mobile1 from "../assets/mobile1.png";
+import mobile2 from "../assets/mobile2.png";
+import mobile3 from "../assets/mobile3.png";
+import mobile4 from "../assets/mobile4.png";
 
 
 const subCategories = [
-  { name: "Cars", img: Vehicle1, link: "/cars" },
-  { name: "Bus & Minibus", img: Vehicle2, link: "/bus&minibus" },
-  { name: "Motorcycle & Tricycle", img: Vehicle3, link: "/motorcycleandtricycle" },
-  { name: "Trucks & Trailers", img: Vehicle4, link: "/truckandtrailer" },
-  { name: "Heavy Duty", img: Vehicle5, link: "/heavyduty" },
-  
+  { name: "Mobile Phones", img: mobile1, link: "#" },
+  { name: "Tablets", img: mobile2, link: "#" },
+  { name: "Smart Watch", img: mobile3, link: "#" },
+  { name: "Accessories for Phone and Tablets", img: mobile4, link: "#" }
 ];
 
-const Vehicles = () => {
+const mobilePhonesAndTabs = () => {
   return (
     <>
       <Header />
@@ -35,7 +32,7 @@ const Vehicles = () => {
 
         {/* Vehicles Content */}
         <div className="w-3/4 px-10 pt-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Vehicles</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Mobile Phones & Tabs</h2>
 
           {/* Subcategories Grid */}
           <div className="grid grid-cols-3 gap-6">
@@ -55,4 +52,4 @@ const Vehicles = () => {
   );
 };
 
-export default Vehicles;
+export default mobilePhonesAndTabs;
