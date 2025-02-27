@@ -5,69 +5,56 @@ import CarsCategorySideBar from "../../../Layouts/Pages/CarsCategorySideBar";
 import CategorySideBar from "../../../Layouts/CategorySideBar";
 import Footer from "../../../Layouts/Footer";
 import toyotaLogo from "../../../assets/ToyotaLogo.png";
-// import tvsLogo from "../../../assets/tvsLogo.png"
-// import hondaLogo from "../../../assets/hondaLogo.png"
-// import bajajLogo from "../../../assets/bajajLogo.png"
-// import suzukiLogo from "../../../assets/suzukiLogo.png"
-// import tvsKeke from "../../../assets/tvsKeke.webp";
-// import hondaBike from "../../../assets/hondaBike.webp";
-// import bajajBike from "../../../assets/bajajBike.webp";
-// import suzukiBike from "../../../assets/suzukiBike.webp"
+import manLogo from "../../../assets/manLogo.png";
+import mackLogo from "../../../assets/mackLogo.png";
+import toyotaTrailer from "../../../assets/toyotaTrailer.webp";
+import manTruck from "../../../assets/manTruck.webp";
+import mackTrailer from "../../../assets/mackTrailer.webp";
 
 
 
 const TruckAndTrailerLogo = [
   { name: "Toyota", logo: toyotaLogo, link: "#" },
-  { name: "Honda", logo: hondaLogo, link: "#" },
-  { name: "Bajaj", logo: bajajLogo, link: "#" },
-  { name: "Suzuki", logo: suzukiLogo, link: "#" },
+  { name: "Man", logo: manLogo, link: "#" },
+  { name: "Mack", logo: mackLogo, link: "#" },
 ];
 
-const bikesforSale = [
+const truckforSale = [
   {
-    id: "tvsKeke",
-    image: tvsKeke,
+    id: "toyotaTrailer",
+    image: toyotaTrailer,
     price: "2.5 ETH",
-    brand: "TVS King Tricycle",
+    brand: "Toyota Hino 700",
     description:
-      "A durable and fuel-efficient tricycle designed for commercial transportation.",
-    store: "TVS Hub",
-    collection: "Tricycles",
-    link: "/tvsKingTricycle",
+      "A heavy-duty trailer truck built for high-performance logistics and cargo transport.",
+    store: "Toyota Trucks Hub",
+    collection: "Heavy-Duty Trailers",
+    link: "/toyotaHino700",
   },
   {
-    id: "hondaBike",
-    image: hondaBike,
+    id: "manTruck",
+    image: manTruck,
     price: "3.2 ETH",
-    brand: "Honda CBR 500R",
+    brand: "MAN TGS 18.440",
     description:
-      "A powerful and stylish sports bike with superior handling and performance.",
-    store: "Honda Motors",
-    collection: "Sport Bikes",
-    link: "/hondaCBR500R",
+      "A high-performance truck designed for long-haul freight with superior fuel efficiency.",
+    store: "MAN Trucks Center",
+    collection: "Long-Haul Trucks",
+    link: "/manTGS18440",
   },
   {
-    id: "bajajBike",
-    image: bajajBike,
+    id: "mackTruck",
+    image: mackTrailer,
     price: "2.8 ETH",
-    brand: "Bajaj Boxer 150",
-    description: "A reliable and fuel-efficient motorcycle ideal for daily commuting.",
-    store: "Bajaj Auto",
-    collection: "Commuter Bikes",
-    link: "/bajajBoxer150",
-  },
-  {
-    id: "suzukiBike",
-    image: suzukiBike,
-    price: "2.0 ETH",
-    brand: "Suzuki GSX-R600",
+    brand: "Mack Anthem",
     description:
-      "A high-performance sports bike with cutting-edge technology and design.",
-    store: "Suzuki Motors",
-    collection: "Sport Bikes",
-    link: "/suzukiGSXR600",
+      "A powerful and rugged truck built for durability and heavy cargo transportation.",
+    store: "Mack Trucks Hub",
+    collection: "Commercial Trucks",
+    link: "/mackAnthem",
   },
 ];
+
 
 
 const TruckAndTrailer = () => {
@@ -76,7 +63,7 @@ const TruckAndTrailer = () => {
   return (
     <>
       <Header />
-      <div className="flex min-h-screen px-6 py-4 mt-16">
+      <div className="flex min-h-screen px-3 py-4 mt-16">
         {/* Sidebar */}
         <div className="w-1/4 min-h-screen border-r border-gray-300">
           <CarsCategorySideBar />
@@ -86,10 +73,10 @@ const TruckAndTrailer = () => {
 
         {/* Main Content */}
         <div className="w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">Motorcycle and Tricycle:</h1>
+          <h1 className="text-2xl font-bold mb-4">Truck and Trailer:</h1>
 
-          {/* Car Logos Grid */}
-          <div className="grid grid-cols-4 md:grid-cols-3 gap-6">
+          {/* Trucks Logos Grid */}
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-4">
             {TruckAndTrailerLogo.map((truck, index) => (
               <Link
                 to={truck.link}
@@ -110,37 +97,38 @@ const TruckAndTrailer = () => {
             ))}
           </div>
 
-          {/* Cars for Sale Grid */}
+          {/* Trucks for Sale Grid */}
           <h2 className="text-2xl font-bold mt-8 mb-4">
-            Available Motorcycle and Tricycle:
+            Available Truck and Trailer:
           </h2>
           <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
-            {bikesforSale.map((bike, index) => (
+            {truckforSale.map((truck, index) => (
               <div
                 key={index}
                 className="bg-gray-100 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition"
-                onClick={() => navigate(`${bike.link}`)}
+                onClick={() => navigate(`${truck.link}`)}
               >
-                {/* Car Image */}
+                {/* Truck Image */}
                 <div className="w-full h-48 flex items-center justify-center">
                   <img
-                    src={bike.image}
-                    alt={bike.brand}
+                    src={truck.image}
+                    alt={truck.brand}
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
 
-                {/* Car Details */}
+
+                {/* truck Details */}
                 <div className="bg-white p-3 ">
-                  <p className="text-lg font-bold text-blue-600">{bike.price}</p>
-                  <p className="text-gray-800 font-semibold">{bike.brand}</p>
-                  <p className="text-gray-600 text-sm">{bike.description}</p>
+                  <p className="text-lg font-bold text-blue-600">{truck.price}</p>
+                  <p className="text-gray-800 font-semibold">{truck.brand}</p>
+                  <p className="text-gray-600 text-sm">{truck.description}</p>
                   <p className="text-gray-500 text-xs mt-2">
-                    Store: <span className="font-semibold">{bike.store}</span>
+                    Store: <span className="font-semibold">{truck.store}</span>
                   </p>
                   <p className="text-gray-500 text-xs">
                     Collection:{" "}
-                    <span className="font-semibold">{bike.collection}</span>
+                    <span className="font-semibold">{truck.collection}</span>
                   </p>
                 </div>
               </div>

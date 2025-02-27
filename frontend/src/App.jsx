@@ -17,6 +17,8 @@ import Collections from "./Layouts/Pages/Collections";
 import CubannaAutosStores from "./Categories/Stores/CubannaAutosStores";
 import BusAndMinibus from "./Categories/Vehicles/BusAndMiniBus/BusAndMinibus";
 import MotorcycleAndTricycle from "./Categories/Vehicles/MotorcycleAndTricycle/MotorcycleAndTricycle";
+import TruckAndTrailer from "./Categories/Vehicles/TrucksAndTrailers/TruckAndTrailer";
+import HeavyDuty from "./Categories/Vehicles/HeavyDuty/HeavyDuty";
 
 function App() {
   const RenderRoute = () => (
@@ -31,6 +33,8 @@ function App() {
       <Route path="/cars" element={<Cars />} />
       <Route path="/bus&minibus" element={<BusAndMinibus />} />
       <Route path="/motorcycleandtricycle" element={<MotorcycleAndTricycle/>} />
+      <Route path="/truckandtrailer" element={<TruckAndTrailer/>} />
+      <Route path="/heavyduty" element={<HeavyDuty/>} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />

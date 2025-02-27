@@ -6,8 +6,8 @@ const vehicleCategories = [
   { name: "Cars", link: "/cars" },
   { name: "Buses & Micro Buses", link: "/bus&minibus" },
   { name: "Motorcycles & Tricycles", link: "/motorcycleandtricycle" },
-  { name: "Trucks & Trailers", link: "#" },
-  { name: "Others", link: "#" },
+  { name: "Trucks & Trailers", link: "/truckandtrailer" },
+  { name: "Heavy Duty", link: "/heavyduty" },
 ];
 
 const CarsCategorySideBar = () => {
