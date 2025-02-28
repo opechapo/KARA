@@ -7,65 +7,66 @@ import Footer from "../../Layouts/Footer";
 import appleLogo from "../../assets/appleLogo.png"; 
 import samsungLogo from "../../assets/samsungLogo.png"; 
 import xiaomiLogo from "../../assets/xiaomiLogo.png"; 
-import googleLogo from "../../assets/googleLogo.png"; 
-import applePhone from "../../assets/applePhone.webp"; 
-import samsungPhone from "../../assets/samsungPhone.webp"; 
-import xiaomiPhone from "../../assets/xiaomiPhone.webp"; 
-import googlePhone from "../../assets/googlePhone.webp"; 
+import oraimoLogo from "../../assets/oraimoLogo.png"; 
+import appleWatch from "../../assets/appleWatch.webp"; 
+import samsungWatch from "../../assets/samsungWatch.webp"; 
+import xiaomiWatch from "../../assets/xiaomiWatch.webp"; 
+import oraimoWatch from "../../assets/oraimoWatch.webp"; 
 
 
-const phoneBrands = [
+const watchBrands = [
   { name: "Apple", logo: appleLogo, link: "#" },
   { name: "Samsung", logo: samsungLogo, link: "#" },
+  { name: "Oraimo", logo: oraimoLogo, link: "#" },
   { name: "Xiaomi", logo: xiaomiLogo, link: "#" },
-  { name: "Google", logo: googleLogo, link: "#" },
 ];
 
-const phoneForSale = [
+const watchForSale = [
   {
-    id: "applePhone",
-    image: applePhone,
+    id: "appleWatch",
+    image: appleWatch,
     price: "2.5 ETH",
-    brand: "iPhone 15 Pro Max",
-    description: "Apple's flagship smartphone featuring an A17 Pro chip, 48MP camera, and a titanium body for durability and style.",
+    brand: "Apple Watch Ultra 2",
+    description: "Apple’s most rugged and feature-packed smartwatch with a titanium case, 100m water resistance, and advanced health tracking.",
     store: "Apple Store",
-    collection: "Premium Smartphones",
-    link: "/iphone15ProMax",
+    collection: "Premium Smartwatches",
+    link: "/appleWatchUltra2",
   },
   {
-    id: "samsungPhone",
-    image: samsungPhone,
+    id: "samsungWatch",
+    image: samsungWatch,
     price: "1.2 ETH",
-    brand: "Samsung Galaxy S24 Ultra",
-    description: "A high-performance smartphone with a 200MP camera, Snapdragon 8 Gen 3 processor, and S-Pen support.",
+    brand: "Samsung Galaxy Watch 6 Classic",
+    description: "A stylish and powerful smartwatch with a rotating bezel, AMOLED display, and advanced fitness tracking features.",
     store: "Samsung Hub",
-    collection: "Flagship Android Phones",
-    link: "/samsungS24Ultra",
+    collection: "Flagship Smartwatches",
+    link: "/samsungWatch6Classic",
   },
   {
-    id: "xiaomiPhone",
-    image: xiaomiPhone,
-    price: "3.0 ETH",
-    brand: "Xiaomi 14 Pro",
-    description: "A cutting-edge device with a 1-inch Leica camera sensor, ultra-fast charging, and a stunning AMOLED display.",
-    store: "Xiaomi Official",
-    collection: "High-End Smartphones",
-    link: "/xiaomi14Pro",
-  },
-  {
-    id: "googlePhone",
-    image: googlePhone,
+    id: "oraimoWatch",
+    image: oraimoWatch,
     price: "2.0 ETH",
-    brand: "Google Pixel 8 Pro",
-    description: "Google's AI-powered smartphone with a Tensor G3 chip, top-tier computational photography, and pure Android experience.",
-    store: "Google Store",
-    collection: "AI-Enhanced Phones",
-    link: "/googlePixel8Pro",
+    brand: "Oraimo Watch 3 Pro",
+    description: "An affordable yet feature-rich smartwatch with heart rate monitoring, long battery life, and IP68 water resistance.",
+    store: "Oraimo Store",
+    collection: "Budget Smartwatches",
+    link: "/oraimoWatch3Pro",
+  },
+  {
+    id: "xiaomiWatch",
+    image: xiaomiWatch,
+    price: "3.0 ETH",
+    brand: "Xiaomi Watch S1 Pro",
+    description: "A premium smartwatch with a sapphire glass display, stainless steel frame, and extensive health tracking capabilities.",
+    store: "Xiaomi Official",
+    collection: "High-End Smartwatches",
+    link: "/xiaomiWatchS1Pro",
   }
 ];
 
 
-const mobilePhones = () => {
+
+const smartWatch = () => {
   const navigate = useNavigate();
 
   return (
@@ -81,59 +82,59 @@ const mobilePhones = () => {
 
         {/* Main Content */}
         <div className="w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">Phones:</h1>
+          <h1 className="text-2xl font-bold mb-4">Smart Watches:</h1>
 
           {/* Car Logos Grid */}
           <div className="grid grid-cols-4 md:grid-cols-3 gap-6">
-            {phoneBrands.map((phone, index) => (
+            {watchBrands.map((watch, index) => (
               <Link
-                to={phone.link}
+                to={watch.link}
                 key={index}
                 className="flex flex-col items-center"
               >
                 <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition duration-300">
                   <img
-                    src={phone.logo}
-                    alt={phone.name}
+                    src={watch.logo}
+                    alt={watch.name}
                     className="w-16 h-16 object-contain"
                   />
                 </div>
                 <p className="mt-2 text-gray-700 font-medium hover:text-blue-600 transition duration-300">
-                  {phone.name}
+                  {watch.name}
                 </p>
               </Link>
             ))}
           </div>
 
           {/* Cars for Sale Grid */}
-          <h2 className="text-2xl font-bold mt-8 mb-4">Available Phones:</h2>
+          <h2 className="text-2xl font-bold mt-8 mb-4">Available Smart Watches:</h2>
           <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
-            {phoneForSale.map((phone, index) => (
+            {watchForSale.map((watch, index) => (
               <div
                 key={index}
                 className="bg-gray-100  rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition"
-                onClick={() => navigate(`${phone.link}`)}
+                onClick={() => navigate(`${watch.link}`)}
               >
                 {/* Car Image */}
                 <div className="w-full h-48 flex items-center justify-center">
                   <img
-                    src={phone.image}
-                    alt={phone.brand}
+                    src={watch.image}
+                    alt={watch.brand}
                     className="w-full h-full object-cover rounded-lg"
                   />
                 </div>
 
                 {/* Car Details */}
                 <div className="bg-white p-3 ">
-                  <p className="text-lg font-bold text-blue-600">{phone.price}</p>
-                  <p className="text-gray-800 font-semibold">{phone.brand}</p>
-                  <p className="text-gray-600 text-sm">{phone.description}</p>
+                  <p className="text-lg font-bold text-blue-600">{watch.price}</p>
+                  <p className="text-gray-800 font-semibold">{watch.brand}</p>
+                  <p className="text-gray-600 text-sm">{watch.description}</p>
                   <p className="text-gray-500 text-xs mt-2">
-                    Store: <span className="font-semibold">{phone.store}</span>
+                    Store: <span className="font-semibold">{watch.store}</span>
                   </p>
                   <p className="text-gray-500 text-xs">
                     Collection:{" "}
-                    <span className="font-semibold">{phone.collection}</span>
+                    <span className="font-semibold">{watch.collection}</span>
                   </p>
                 </div>
               </div>
@@ -141,10 +142,11 @@ const mobilePhones = () => {
           </div>
         </div>
       </div>
+
       {/* Footer */}
       <Footer />
     </>
   );
 };
 
-export default mobilePhones;
+export default smartWatch;
