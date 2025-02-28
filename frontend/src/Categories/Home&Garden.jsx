@@ -5,14 +5,15 @@ import Footer from "../Layouts/Footer";
 import CategorySideBar from "../Layouts/CategorySideBar";
 import HomeGarden1 from "../assets/Home&Garden1.png";
 import HomeGarden2 from "../assets/Home&Garden2.png";
-import HomeGarden3 from "../assets/Home&Garden3.png";
+import HomeGarden5 from "../assets/Home&Garden5.png";
+// import HomeGarden5 from "../assets/Home&Garden5.png";
 import HomeGarden4 from "../assets/Home&Garden4.png";
 
 const subCategories = [
-  { name: "Furniture", img: HomeGarden1, link: "/home-gardens/furniture" },
-  { name: "Home Appliance", img: HomeGarden2, link: "/home-gardens/appliances" },
-  { name: "Kitchen Utensils", img: HomeGarden3, link: "/home-gardens/kitchen" },
-  { name: "Home Accessories", img: HomeGarden4, link: "/home-gardens/accessories" },
+  { name: "Furniture", img: HomeGarden1, link: "/furnitures" },
+  { name: "Home Appliance", img: HomeGarden2, link: "/homeappliance" },
+  { name: "Kitchen Appliance", img: HomeGarden5, link: "/kitchenappliances" },
+  { name: "Home Accessories", img: HomeGarden4, link: "#" },
 ];
 
 const HomeGardens = () => {
