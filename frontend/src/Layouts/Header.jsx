@@ -38,7 +38,7 @@ const Header = () => {
               <div className="absolute left-0 mt-2 bg-white shadow-lg rounded-md p-4 w-48">
                 <ul className="space-y-2 text-gray-700">
                   <li><Link to="/electronics" className="block hover:text-purple-600">Electronics</Link></li>
-                  <li><Link to="/smartphonetab" className="block hover:text-purple-600">Smart Phones & Tabs</Link></li>
+                  <li><Link to="/mobilephoneandtabs" className="block hover:text-purple-600">Mobile Phones & Tabs</Link></li>
                   <li><Link to="/vehicles" className="block hover:text-purple-600">Vehicles</Link></li>
                   <li><Link to="/fashion" className="block hover:text-purple-600">Fashion</Link></li>
                   <li><Link to="/home&garden" className="block hover:text-purple-600">Home & Gardens</Link></li>

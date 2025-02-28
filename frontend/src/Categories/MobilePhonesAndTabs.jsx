@@ -10,10 +10,10 @@ import mobile4 from "../assets/mobile4.png";
 
 
 const subCategories = [
-  { name: "Mobile Phones", img: mobile1, link: "#" },
-  { name: "Tablets", img: mobile2, link: "#" },
-  { name: "Smart Watch", img: mobile3, link: "#" },
-  { name: "Accessories for Phone and Tablets", img: mobile4, link: "#" }
+  { name: "Mobile Phones", img: mobile1, link: "/mobilephone" },
+  { name: "Tablets", img: mobile2, link: "/tablets" },
+  { name: "Smart Watch", img: mobile3, link: "/smartwatch" },
+  { name: "Accessories for Phone and Tablets", img: mobile4, link: "/phoneandtabaccesories" }
 ];
 
 const mobilePhonesAndTabs = () => {

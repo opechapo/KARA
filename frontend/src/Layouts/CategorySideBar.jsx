@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const categories = [
   { name: "Electronics", icon: <FaLaptop />, link: "/electronics" },
-  { name: "Smart Phones & Tabs", icon: <FaMobileAlt />, link: "/smartphonetab" },
+  { name: "Mobile Phones & Tabs", icon: <FaMobileAlt />, link: "/mobilephoneandtabs" },
   { name: "Vehicles", icon: <FaCar />, link: "/vehicles" },
   { name: "Fashion", icon: <FaTshirt />, link: "/fashion" },
   { name: "Home & Gardens", icon: <FaHome />, link: "/home&garden" },
