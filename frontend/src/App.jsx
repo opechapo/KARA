@@ -24,6 +24,9 @@ import MotorcycleAndTricycle from "./Categories/Vehicles/MotorcycleAndTricycle/M
 import TruckAndTrailer from "./Categories/Vehicles/TrucksAndTrailers/TruckAndTrailer";
 import HeavyDuty from "./Categories/Vehicles/HeavyDuty/HeavyDuty";
 import MobilePhoneCategorySideBar from "./Layouts/Pages/MobilePhoneCategorySideBar";
+import Furnitures from "./Categories/HomeAndGardens/Furnitures";
+import HomeAppliance from "./Categories/HomeAndGardens/HomeAppliances";
+import KitchenAppliances from "./Categories/HomeAndGardens/KitchenAppliances";
 
 function App() {
   const RenderRoute = () => (
@@ -36,15 +39,24 @@ function App() {
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/cars" element={<Cars />} />
       <Route path="/bus&minibus" element={<BusAndMinibus />} />
-      <Route path="/motorcycleandtricycle" element={<MotorcycleAndTricycle/>} />
-      <Route path="/truckandtrailer" element={<TruckAndTrailer/>} />
-      <Route path="/heavyduty" element={<HeavyDuty/>} />
+      <Route
+        path="/motorcycleandtricycle"
+        element={<MotorcycleAndTricycle />}
+      />
+      <Route path="/truckandtrailer" element={<TruckAndTrailer />} />
+      <Route path="/heavyduty" element={<HeavyDuty />} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/mobilephoneandtabs" element={<MobilePhoneAndTabs />} />
       <Route path="/mobilephone" element={<MobilePhone />} />
       <Route path="/tablets" element={<Tablets />} />
       <Route path="/smartwatch" element={<SmartWatch />} />
-      <Route path="/phoneandtabaccesories" element={<PhoneAndTabAccesories />} />
+      <Route
+        path="/phoneandtabaccesories"
+        element={<PhoneAndTabAccesories />}
+      />
+      <Route path="/furnitures" element={<Furnitures />} />
+      <Route path="/homeappliance" element={<HomeAppliance />} />
+      <Route path="/kitchenappliances" element={<KitchenAppliances />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
