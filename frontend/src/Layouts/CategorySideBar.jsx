@@ -8,7 +8,7 @@ const categories = [
   { name: "Mobile Phones & Tabs", icon: <FaMobileAlt />, link: "/mobilephoneandtabs" },
   { name: "Vehicles", icon: <FaCar />, link: "/vehicles" },
   { name: "Fashion", icon: <FaTshirt />, link: "/fashion" },
-  { name: "Home & Gardens", icon: <FaHome />, link: "/homeandgarden" },
+  { name: "Home & Gardens", icon: <FaHome />, link: "/home&garden" },
   
  
 ];

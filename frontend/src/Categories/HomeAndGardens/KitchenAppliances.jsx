@@ -85,7 +85,7 @@ const KitchenAppliances = () => {
 
         {/* Main Content */}
         <div className="w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">Home Appliances:</h1>
+          <h1 className="text-2xl font-bold mb-4">Kitchen Appliances:</h1>
 
           {/* Car Logos Grid */}
           <div className="grid grid-cols-4 md:grid-cols-3 gap-6">
@@ -111,7 +111,7 @@ const KitchenAppliances = () => {
 
           {/* Cars for Sale Grid */}
           <h2 className="text-2xl font-bold mt-8 mb-4">
-            Available Home Appliances:
+            Available Kitchen Appliances:
           </h2>
           <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
             {KitchenAppliancesForSale.map((KitchenAppliance, index) => (
