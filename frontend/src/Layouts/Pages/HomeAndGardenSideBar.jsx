@@ -6,7 +6,7 @@ const HomeAndGardenCategories = [
   { name: "Furnitures", link: "/furnitures" },
   { name: "Home Appliances", link: "/homeappliance" },
   { name: "Kitchen Appliances", link: "/kitchenappliances" },
-  { name: "Home Accessories", link: "/phoneandtabaccesories" },
+  { name: "Home Accessories", link: "/homeaccesories" },
 ];
 
 const HomeAndGardenCategorySideBar = () => {

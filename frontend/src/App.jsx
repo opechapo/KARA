@@ -27,6 +27,7 @@ import MobilePhoneCategorySideBar from "./Layouts/Pages/MobilePhoneCategorySideB
 import Furnitures from "./Categories/HomeAndGardens/Furnitures";
 import HomeAppliance from "./Categories/HomeAndGardens/HomeAppliances";
 import KitchenAppliances from "./Categories/HomeAndGardens/KitchenAppliances";
+import HomeAccesories from "./Categories/HomeAndGardens/HomeAccesories";
 
 function App() {
   const RenderRoute = () => (
@@ -57,6 +58,7 @@ function App() {
       <Route path="/furnitures" element={<Furnitures />} />
       <Route path="/homeappliance" element={<HomeAppliance />} />
       <Route path="/kitchenappliances" element={<KitchenAppliances />} />
+      <Route path="/homeaccesories" element={<HomeAccesories />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />

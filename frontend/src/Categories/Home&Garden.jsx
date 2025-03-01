@@ -13,7 +13,7 @@ const subCategories = [
   { name: "Furniture", img: HomeGarden1, link: "/furnitures" },
   { name: "Home Appliance", img: HomeGarden2, link: "/homeappliance" },
   { name: "Kitchen Appliance", img: HomeGarden5, link: "/kitchenappliances" },
-  { name: "Home Accessories", img: HomeGarden4, link: "#" },
+  { name: "Home Accessories", img: HomeGarden4, link: "/homeaccesories" },
 ];
 
 const HomeGardens = () => {
