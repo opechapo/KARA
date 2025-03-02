@@ -28,6 +28,8 @@ import Furnitures from "./Categories/HomeAndGardens/Furnitures";
 import HomeAppliance from "./Categories/HomeAndGardens/HomeAppliances";
 import KitchenAppliances from "./Categories/HomeAndGardens/KitchenAppliances";
 import HomeAccesories from "./Categories/HomeAndGardens/HomeAccesories";
+import Bags from "./Categories/Fashions/Bags";
+import Clothings from "./Categories/Fashions/Clothings";
 
 function App() {
   const RenderRoute = () => (
@@ -38,13 +40,13 @@ function App() {
       <Route path="/fashion" element={<Fashion />} />
       <Route path="/home&garden" element={<HomeGardens />} />
       <Route path="/aboutus" element={<AboutUs />} />
-      <Route path="/cars" element={<Cars />} />
-      <Route path="/bus&minibus" element={<BusAndMinibus />} />
+      <Route path="/vehicles/cars" element={<Cars />} />
+      <Route path="/vehicles/bus&minibus" element={<BusAndMinibus />} />
       <Route
-        path="/motorcycleandtricycle"
+        path="/vehicles/motorcycleandtricycle"
         element={<MotorcycleAndTricycle />}
       />
-      <Route path="/truckandtrailer" element={<TruckAndTrailer />} />
+      <Route path="/vehicles/truckandtrailer" element={<TruckAndTrailer />} />
       <Route path="/heavyduty" element={<HeavyDuty />} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/mobilephoneandtabs" element={<MobilePhoneAndTabs />} />
@@ -61,6 +63,8 @@ function App() {
       <Route path="/homeaccesories" element={<HomeAccesories />} />
       <Route path="/stores" element={<Stores />} />
       <Route path="/collections" element={<Collections />} />
+      <Route path="/fashion/bags" element={<Bags />} />
+      <Route path="/fashion/clothings" element={<Clothings />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
     </Routes>
   );
