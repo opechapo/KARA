@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Header from "./../../Layouts/Header";
+import Header from "../../Layouts/Header";
 import HomeAndGardenSideBar from "./../../Layouts/Pages/HomeAndGardenSideBar";
 import CategorySideBar from "./../../Layouts/CategorySideBar";
 import Footer from "./../../Layouts/Footer";
