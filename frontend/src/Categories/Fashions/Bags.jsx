@@ -81,7 +81,7 @@ const Bags = () => {
 
         {/* Main Content */}
         <div className="w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">Furnitures:</h1>
+          <h1 className="text-2xl font-bold mb-4">Bags:</h1>
 
           {/* Bag Logos Grid */}
           <div className="grid grid-cols-4 md:grid-cols-3 gap-6">
@@ -107,7 +107,7 @@ const Bags = () => {
 
           {/* Bags for Sale Grid */}
           <h2 className="text-2xl font-bold mt-8 mb-4">
-            Available Furnitures:
+            Available Bags:
           </h2>
           <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
             {BagsForSale.map((Bag, index) => (

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./../../Layouts/Header";
-import FashionCategorySideBar from "./../../Layouts/Pages/HomeAndGardenSideBar";
+import FashionCategorySideBar from "./../../Layouts/Pages/FashionCategorySideBar";
 import CategorySideBar from "./../../Layouts/CategorySideBar";
 import Footer from "./../../Layouts/Footer";
 import dressesLogo from "./../../assets/dressesLogo.png";
@@ -82,7 +82,7 @@ const Clothings = () => {
 
         {/* Main Content */}
         <div className="w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">Furnitures:</h1>
+          <h1 className="text-2xl font-bold mb-4">Clothings:</h1>
 
           {/* Bag Logos Grid */}
           <div className="grid grid-cols-4 md:grid-cols-3 gap-6">
@@ -108,7 +108,7 @@ const Clothings = () => {
 
           {/* Bags for Sale Grid */}
           <h2 className="text-2xl font-bold mt-8 mb-4">
-            Available Furnitures:
+            Available Clothings:
           </h2>
           <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
             {ClothingsForSale.map((clothing, index) => (

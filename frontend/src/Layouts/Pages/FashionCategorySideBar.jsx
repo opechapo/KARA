@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 const FashionCategories = [
   { name: "Bags", link: "/fashion/bags" },
   { name: "Clothings", link: "/fashion/clothings" },
-  { name: "Jewelry", link: "#" },
-  { name: "Shoes", link: "#" },
-  { name: "Clothing Accesories", link: "#" },
+  { name: "Shoes", link: "/fashion/shoes" },
+  { name: "Watches", link: "/fashion/watches" },
 ];
 
 const FashionCategorySideBar = () => {

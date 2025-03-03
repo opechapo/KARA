@@ -13,7 +13,6 @@ import refrigerator from "./../../assets/refrigerator.webp";
 import freezer from "./../../assets/freezer.webp";
 import blender from "./../../assets/blender.webp";
 
-
 const KitchenAppliancestypes = [
   { name: "Refrigerators", logo: refrigeratorsLogo, link: "/cars/toyota" },
   {
@@ -142,7 +141,9 @@ const KitchenAppliances = () => {
                   </p>
                   <p className="text-gray-500 text-xs mt-2">
                     Store:{" "}
-                    <span className="font-semibold">{KitchenAppliance.store}</span>
+                    <span className="font-semibold">
+                      {KitchenAppliance.store}
+                    </span>
                   </p>
                   <p className="text-gray-500 text-xs">
                     Collection:{" "}
