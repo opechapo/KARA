@@ -81,8 +81,8 @@ const Header = () => {
         {/* Right Section - User Actions */}
         <div className="flex items-center space-x-6 text-2xl text-gray-700 ml-6">
           {/* Non-Custodial Login */}
-          <button className="hover:text-purple-600 cursor-pointer transition">
-            <IoMdPersonAdd />
+          <button className="hover:text-purple-600 cursor-pointer transition bg-purple-700 text-white p-3 rounded">
+            Connect Wallet
           </button>
 
           {/* Notification*/}
