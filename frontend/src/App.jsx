@@ -32,6 +32,7 @@ import Bags from "./Categories/Fashions/Bags";
 import Clothings from "./Categories/Fashions/Clothings";
 import Watches from "./Categories/Fashions/Watches";
 import Shoes from "./Categories/Fashions/Shoes";
+import AudioAndMusicInstrument from "./Categories/Electronics/AudioAndMusicInstrument";
 
 function App() {
   const RenderRoute = () => (
@@ -69,6 +70,7 @@ function App() {
       <Route path="/fashion/clothings" element={<Clothings />} />
       <Route path="/fashion/watches" element={<Watches />} />
       <Route path="/fashion/shoes" element={<Shoes />} />
+      <Route path="/electronics/audioandmusicinstrument" element={<AudioAndMusicInstrument />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
     </Routes>
   );

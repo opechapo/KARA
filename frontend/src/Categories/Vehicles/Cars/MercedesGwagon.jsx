@@ -112,7 +112,7 @@ const MercedesGwagon = () => {
                   onClick={() => navigate("/deal")}
                   className="flex-1 bg-purple-900 text-white py-2 rounded-lg text-center font-semibold cursor-pointer"
                 >
-                  Deal
+                  Trade
                 </button>
                 <button
                   onClick={() => navigate("/chat")}

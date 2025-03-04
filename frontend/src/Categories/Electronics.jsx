@@ -13,7 +13,7 @@ import Electronics6 from "../assets/Electronics6.png";
 const subCategories = [
   { name: "Laptops & Computers", img: Electronics1, link: "/electronics/laptops" },
   { name: "TV & Projector", img: Electronics2, link: "/electronics/tv-projector" },
-  { name: "Audio & Music Equipment", img: Electronics3, link: "/electronics/audio" },
+  { name: "Audio & Music Equipment", img: Electronics3, link: "/electronics/audioandmusicinstrument" },
   { name: "Cameras", img: Electronics4, link: "/electronics/cameras" },
   { name: "Printer & Scanner", img: Electronics5, link: "/electronics/printers" },
   { name: "Video Games & Consoles", img: Electronics6, link: "/electronics/games" },
