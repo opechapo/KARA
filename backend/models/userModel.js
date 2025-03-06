@@ -7,8 +7,12 @@ const UserSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
+      lowercase: true,
     },
-   
+    nonce: {
+      type: String,
+      default: () => Math.random().toString(36).substring(2),
+    },
     transactionHistory: [
       {
         txHash: String,
@@ -16,8 +20,6 @@ const UserSchema = new mongoose.Schema(
         timestamp: { type: Date, default: Date.now },
       },
     ],
-    
-  
   },
   { timestamps: true }
 );
