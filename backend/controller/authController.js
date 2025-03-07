@@ -1,62 +1,34 @@
-const User = require('../models/User');
-const { ethers } = require('ethers'); // For signature verification
-const jwt = require('jsonwebtoken');
+const User = require('./models/User');
+const generateToken = require('../utils/generateToken');
 
 const authController = {
-  // Get nonce for a wallet address or create new user
-  getNonce: async (req, res) => {
+  register: async (req, res) => {
+    const { email, password, name, role } = req.body;
     try {
-      const { walletAddress } = req.params;
-      
-      let user = await User.findOne({ walletAddress });
-      
-      // If user doesn't exist, create a new one
-      if (!user) {
-        user = await User.create({ walletAddress });
-      }
-      
-      res.json({ nonce: user.nonce });
+      let user = await User.findOne({ email });
+      if (user) return res.status(400).json({ error: 'User already exists' });
+
+      user = await User.create({ email, password, name, role });
+      const token = generateToken(user._id);
+      res.status(201).json({ token, user: { id: user._id, email: user.email, name: user.name, role: user.role } });
     } catch (error) {
-      res.status(500).json({ error: 'Server error' });
+      res.status(500).json({ error: error.message });
     }
   },
 
-  // Verify signature and connect wallet
-  connectWallet: async (req, res) => {
+  login: async (req, res) => {
+    const { email, password } = req.body;
     try {
-      const { walletAddress, signature } = req.body;
-      
-      // Find user
-      const user = await User.findOne({ walletAddress });
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+      const user = await User.findOne({ email });
+      if (!user || !(await user.matchPassword(password))) {
+        return res.status(401).json({ error: 'Invalid credentials' });
       }
-
-      // Verify signature
-      const message = `Connect wallet with nonce: ${user.nonce}`;
-      const recoveredAddress = ethers.utils.verifyMessage(message, signature);
-
-      if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
-        return res.status(401).json({ error: 'Invalid signature' });
-      }
-
-      // Generate new nonce after successful verification
-      user.nonce = Math.random().toString(36).substring(2);
-      await user.save();
-
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user._id, walletAddress: user.walletAddress },
-        process.env.JWT_SECRET,
-        { expiresIn: '1d' }
-      );
-
-      res.json({ token, user: { walletAddress: user.walletAddress } });
+      const token = generateToken(user._id);
+      res.json({ token, user: { id: user._id, email: user.email, name: user.name, role: user.role } });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Server error' });
+      res.status(500).json({ error: error.message });
     }
-  }
+  },
 };
 
 module.exports = authController;
