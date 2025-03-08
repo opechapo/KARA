@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React, { useState,useEffect } from "react";
+>>>>>>> c7d1b48 (connect wallet)
 import { Link, useLocation } from "react-router-dom";
 import { IoMdNotifications, IoMdCart } from "react-icons/io";
 import { FaBars } from "react-icons/fa";
@@ -105,6 +109,64 @@ const Header = () => {
     }
   };
 
+  useEffect (() => {
+    getCurrentWalletConnected()
+    addWalletListener()
+  });
+
+  const connectWallet = async() => {
+    if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+      try{
+        // Metamask is installed
+        const accounts= await window.ethereum.request({ method: "eth_requestAccounts"});
+        setWalletAddress(accounts[0]);
+        console.log(accounts[0])
+      }catch(err){
+        console.error(err.message);
+      }
+  }else {
+    // Metamask is not installed
+    console.log("Please install Metamask to connect your wallet");
+
+  }
+};
+
+const getCurrentWalletConnected = async() => {
+  if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+    try{
+      // Metamask is installed
+      const accounts= await window.ethereum.request({ method: "eth_accounts"});
+      if (accounts.length > 0) {
+        setWalletAddress(accounts[0]);
+        console.log(accounts[0]);
+      } else {
+        console.log("Please connect your wallect using the connect button");
+      }
+     
+    }catch(err){
+      console.error(err.message);
+    }
+}else {
+  // Metamask is not installed
+  console.log("Please install Metamask to connect your wallet");
+
+}
+};
+  
+const addWalletListener = async() => {
+  if (typeof window != "undefined" && typeof window.ethereum != "undefined") {
+   window.ethereum.on("accountChanged", (account) => {
+     setWalletAddress(account[0]);
+     console.log(account[0]);
+   })
+}else {
+  // Metamask is not installed
+  setWalletAddress("");
+  console.log("Please install Metamask to connect your wallet");
+
+}
+};
+
   return (
     <header className="fixed top-0 w-full bg-white z-50 shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 py-3">
@@ -165,6 +227,7 @@ const Header = () => {
 
         {/* Right Section - User Actions */}
         <div className="flex items-center space-x-2 text-xl text-gray-700 ml-6">
+<<<<<<< HEAD
           <button
             className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
             onClick={connectWallet}
@@ -172,6 +235,13 @@ const Header = () => {
             {walletAddress && walletAddress.length > 0
               ? `Connected: ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`
               : "Connect Wallet"}
+=======
+
+          {/* Non-Custodial Login */}
+        
+          <button className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl " onClick={connectWallet}>
+            {walletAddress && walletAddress.length > 0 ? `Connected: ${walletAddress.substring(0,6)}...${walletAddress.substring(38)}` : "Connect Wallet"}
+>>>>>>> c7d1b48 (connect wallet)
           </button>
           <button className="relative hover:text-purple-600 cursor-pointer transition">
             <IoMdNotifications />
