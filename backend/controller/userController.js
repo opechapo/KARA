@@ -7,9 +7,9 @@ const bcrypt = require('bcryptjs');
 
 const register = asyncHandler(async (req, res) => {
   try {
-    const { email, password, name, role, phoneNumber } = req.body;
+    const { email, password, name, role} = req.body;
 
-    if (!email || !password || !name || !role || !phoneNumber) {
+    if (!email || !password || !name || !role) {
       return res.status(400).json({ message: "All fields are required" });
     } else if (password.length < 8) {
       return res.status(400).json({ message: "Password must be at least 8 characters" });
@@ -23,7 +23,7 @@ const register = asyncHandler(async (req, res) => {
          return res.status(400).json({message: 'Email aleady exists'});
      }
 
-     const user = await User.create({email, password, name, role, phoneNumber })
+     const user = await User.create({email, password, name, role })
      const token = generateToken(user._id);
 
      res.cookie('token', token, {
