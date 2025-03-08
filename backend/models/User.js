@@ -6,7 +6,10 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   role: { type: String, enum: ['buyer', 'seller', 'admin'], default: 'buyer' },
-  address: { type: String },
+  phoneNumber: { type: String, unique: true, sparse: true }, // sparse allows null values while maintaining uniqueness
+  isPhoneVerified: { type: Boolean, default: false },
+  verificationCode: { type: String }, // Temporary code for verification
+  verificationCodeExpires: { type: Date }, // Expiration time for the code
   // orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
 }, { timestamps: true });
 
@@ -20,6 +23,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
 
 module.exports = mongoose.model('User', userSchema);
 

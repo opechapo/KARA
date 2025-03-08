@@ -4,12 +4,17 @@ const connectDb = require("./config/db");
 const express= require('express');
 const app = express();
 const cors = require('cors');
-const PORT = 3000
-// const multer = require("multer");
-// const userRoute = require("./route/userRoute");
-// const cookieParser = require('cookie-parser');
-// const errorHandler = require("./middleware/errorMiddleware");
+const errorHandler = require('./middleware/errorHandler');
+// const authRoutes = require('./routes/authRoutes');
+// const productRoutes = require('./routes/productRoutes');
+// const orderRoutes = require('./routes/orderRoutes');
+// const userRoutes = require('./routes/userRoutes');
 
+
+
+const PORT = process.env.PORT || 3000
+
+//Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
@@ -27,9 +32,19 @@ app.use(cors({
   methods: "GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS",
 }))
 
+// Routes
+// app.use('/api/auth', authRoutes);
+// app.use('/api/products', productRoutes);
+// app.use('/api/orders', orderRoutes);
+// app.use('/users', userRoutes);
 
 
-// app.use("/user", userRoute); 
+// Error Handler
+app.use(errorHandler);
+
+
+
+
 
 app.get('/',(req, res) => console.log("Hello world"))
 
