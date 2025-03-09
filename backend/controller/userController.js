@@ -1,7 +1,7 @@
-const User = require('./models/User');
+const User = require("../models/User");
 const asyncHandler = require('express-async-handler');
-const generateToken = require("../utils");
 const bcrypt = require('bcryptjs');
+const generateToken = require("../utils/generateToken");
 
 // Register User
 
@@ -37,7 +37,7 @@ const register = asyncHandler(async (req, res) => {
      // Send a success response with user details and token
      if(user) {
          const { _id,email } = user;
-         res.status(201).json({_id,email})
+         res.status(201).json({_id,email,password, name, role})
      } else {
          console.log(error);
         res.status(400).json({ message: "Invalid Data" });
@@ -48,114 +48,104 @@ const register = asyncHandler(async (req, res) => {
   }
 });
 
-// // Login User
-// const loginUser = asyncHandler(async (req, res) => {
-//   try {
-//     const {email, password} = req.body;
-//     let user = await User.findOne({email})
 
-//     // Check if the admin exists
-//     if(!user) {
-//         return res.status(404).json({message: 'User Not Found!'})
-//     }
-//     // Check password
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if(!isMatch) {
-//         return res.status(400).json({message: 'Invalid Credentials'})
-//     }
+// Login User
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-//     const token = generateToken(user._id);
-//     res.cookie('token', token, {
-//         path: '/',
-//         httpOnly: true,
-//         expires: new Date(Date.now() + 1000 * 86400),   //expires within 24hrs
-//         sameSite: 'none',
-//         secure: true
-//     })
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("Email and password are required");
+  }
 
-//     const {_id} = user;
-//     res.status(201).json({_id,email, token})
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
+  const user = await User.findOne({ email });
+  if (!user || !(await user.matchPassword(password))) {
+    res.status(401);
+    throw new Error("Invalid email or password");
+  }
 
-// // Get User 
+  const token = generateToken(user._id);
+  res.cookie('token', token, {
+    path: '/',
+    httpOnly: true,
+    expires: new Date(Date.now() + 1000 * 86400), // 24 hours
+    sameSite: 'none',
+    secure: true,
+  });
 
-// const getUser = asyncHandler(async (req, res) => {
-//   try {
-//     const { userId } = req.params;
-//     const user = await User.findById(userId);
-
-//     if(user) {
-//       const {_id,email}  = user
-//       return res.status(200).json({_id,email})
-//   } else {
-//       return res.status(404).json({message: 'User Not Found!'})
-//   }
-
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ message: "Internal Server Error" });
-//   }
-// });
-
-// // Update User
-
-// const updateUser = asyncHandler(async(req, res) => {
-//   try{
-//     const { userId } = req.params;
-//     const {email, password} = req.body;
-//     const user = await User.findById(userId);
-//     if(!user) {
-//         return res.status(404).json({message: 'User not found'})
-//     }
-
-    
-//     user.email = email || user.email;
-//     user.password = password || user.password;
-
-//     await user.save();
-//     res.status(200).json(user);
-//   } catch(error){
-//     console.error(error);
-//     res.status(500).json({message: 'Internal Server Error'})
-//   }
-// })
-
-// // DeleteUser
-
-// const deleteUser = asyncHandler(async(req, res) =>{
-//   try{
-//     const { userId } = req.params;
-//     const user = await User.findById(userId);
-//     if(!user){
-//       return res.status(404).json({message: 'User not found'})
-//     }
-//     await user.deleteOne();
-//     res.status(200).json({message: 'User deleted successfully'})
-//   } catch(error){
-//     console.error(error);
-//     res.status(500).json({message: 'Internal Server Error'})
-//   }
-// })
-
-// //logOutUser
-
-// const logoutUser = asyncHandler(async(req, res) => {
-//   res.cookie('token', '', {
-//       path: '/',
-//       httpOnly: true,
-//       expires: new Date(0),  
-//       sameSite: 'none',
-//       secure: true
-//   })
-//   return res.status(200).json({message: 'Logout Successful'})
-// })
+  const { _id, email: userEmail, name, role } = user;
+  res.json({ _id, email: userEmail, name, role });
+});
 
 
+// Get User Profile
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+  const { _id, email, name, role } = user;
+  res.json({ _id, email, name, role });
+});
 
-module.exports = { register };
+// Update User
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
 
-// module.exports = { register, loginUser, getUser, updateUser, deleteUser, logoutUser };
+  const { email, name, password, role } = req.body;
+
+  if (email) user.email = email;
+  if (name) user.name = name;
+  if (password) {
+    if (password.length < 8) {
+      res.status(400);
+      throw new Error("Password must be at least 8 characters");
+    }
+    if (password.length > 20) {
+      res.status(400);
+      throw new Error("Password must not exceed 20 characters");
+    }
+    user.password = password; // Will be hashed by pre-save hook
+  }
+  if (role) user.role = role;
+
+  const updatedUser = await user.save();
+  const { _id, email: updatedEmail, name: updatedName, role: updatedRole } = updatedUser;
+  res.json({ _id, email: updatedEmail, name: updatedName, role: updatedRole });
+});
+
+// Delete User
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  await User.deleteOne({ _id: user._id });
+  res.clearCookie('token', {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.json({ message: "User deleted successfully" });
+});
+
+// Logout User
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie('token', {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.json({ message: "Logged out successfully" });
+});
+
+module.exports = { register, loginUser, getUser, updateUser, deleteUser, logoutUser };

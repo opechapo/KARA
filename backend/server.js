@@ -1,15 +1,21 @@
 require("dotenv").config();
+console.log('JWT_SECRET:', process.env.JWT_SECRET);
 const mongoose = require('mongoose');
 const connectDb = require("./config/db");
 const express= require('express');
 const app = express();
 const cors = require('cors');
-const PORT = 3000
+const cookieParser = require('cookie-parser');
+const userRoutes = require("./route/userRoutes");
 
+
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
+app.use(cookieParser());
+app.use("/user", userRoutes);
+
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -26,6 +32,7 @@ app.use(cors({
 app.get('/',(req, res) => console.log("Hello world"))
 
 connectDb();
+
 
 mongoose.connection.once("open", () =>{
   console.log("Database connected");
