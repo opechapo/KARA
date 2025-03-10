@@ -14,6 +14,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const userRoutes = require("./route/userRoutes");
 const productRoutes = require("./route/productRoutes");
+const orderRoutes = require("./route/orderRoutes");
 
 
 const PORT = process.env.PORT || 3000;
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
+app.use("/orders", orderRoutes);
+
 
 
 app.use((req, res, next) => {
