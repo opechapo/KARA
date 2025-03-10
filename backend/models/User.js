@@ -4,8 +4,13 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true },
-  name: { type: String, required: true },
+  firstName: { type: String, required: true }, // Replaced name
+  lastName: { type: String, required: true },  // Replaced name
   role: { type: String, enum: ['buyer', 'seller', 'admin'], default: 'buyer' },
+  phoneNumber: { type: String, unique: true, sparse: true }, // Added for Nigerian numbers
+  isPhoneVerified: { type: Boolean, default: false },       // Verification status
+  verificationCode: { type: String },                       // Temporary code
+  verificationCodeExpires: { type: Date },                  // Code expiration
 }, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
