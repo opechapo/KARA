@@ -1,4 +1,3 @@
-// controllers/orderController.js
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const asyncHandler = require('express-async-handler');

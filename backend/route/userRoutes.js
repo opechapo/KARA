@@ -1,16 +1,16 @@
+// routes/userRoutes.js
 const express = require('express');
 const router = express.Router();
-const { register,loginUser,getUser,updateUser,deleteUser,logoutUser,verifyPhone } = require("../controller/userController");
+const { getNonce, connectWallet,  } = require('../controller/userController');
+// getUser, updateUser, logoutUser
 const authMiddleware = require('../middleware/auth');
 
 
-router.post("/register", register);
-router.post('/login', loginUser);
-router.get('/:userId', authMiddleware, getUser);
-router.put('/:userId', authMiddleware, updateUser);
-router.delete('/:userId', authMiddleware, deleteUser);
-router.post('/logout', authMiddleware, logoutUser);
-router.post('/verify-phone', authMiddleware, verifyPhone);
+router.get('/nonce/:walletAddress', getNonce);           // Get nonce for wallet
+router.post('/connect-wallet', connectWallet);          // Connect wallet
+// router.get('/profile', authMiddleware, getUser);        // Get profile
+// router.put('/profile', authMiddleware, updateUser);     // Update profile
+// router.post('/logout', authMiddleware, logoutUser);     // Logout
 
 
 module.exports = router;
