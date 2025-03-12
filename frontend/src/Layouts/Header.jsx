@@ -68,6 +68,7 @@ const Header = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
+    
   
       if (!connectResponse.ok) {
         const errorText = await connectResponse.text();
@@ -170,9 +171,9 @@ const Header = () => {
             }}
           />
         </div>
-        <div className="flex items-center space-x-2 text-xl text-gray-700 ml-6">
+        <div className="flex items-center space-x-2 text-l text-gray-700 ml-6">
           <button
-            className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
+            className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-xl"
             onClick={connectWallet}
           >
             {walletAddress && walletAddress.length > 0
