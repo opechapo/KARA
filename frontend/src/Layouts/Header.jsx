@@ -1,3 +1,4 @@
+// Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IoMdNotifications, IoMdCart } from 'react-icons/io';
@@ -16,6 +17,9 @@ const Header = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false); // Modal state
+  const [emailInput, setEmailInput] = useState(''); // Email input state
 
   useEffect(() => {
     getCurrentWalletConnected();
@@ -25,18 +29,20 @@ const Header = () => {
   const connectWallet = async () => {
     if (typeof window.ethereum === 'undefined') {
       console.log('Please install MetaMask to connect your wallet');
+      setErrorMessage('Please install MetaMask to connect your wallet');
       return;
     }
-  
+
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const address = accounts[0];
       console.log('Connected address:', address);
       setWalletAddress(address);
-  
+      setErrorMessage('');
+
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-  
+
       // 1. Get nonce
       console.log('Fetching nonce from:', `http://localhost:3000/user/nonce/${address}`);
       const nonceResponse = await fetch(`http://localhost:3000/user/nonce/${address}`);
@@ -47,45 +53,69 @@ const Header = () => {
       }
       const { nonce } = await nonceResponse.json();
       console.log('Received nonce:', nonce);
-  
-      // 2. Sign the message
+
+      // 2. Open email modal instead of prompt
+      setIsEmailModalOpen(true);
+      const email = await new Promise((resolve) => {
+        const handleModalSubmit = (submittedEmail) => {
+          resolve(submittedEmail);
+        };
+        window.handleModalSubmit = handleModalSubmit; 
+      });
+      console.log('Provided email:', email);
+      setIsEmailModalOpen(false);
+      delete window.handleModalSubmit;
+
+      // 3. Sign the message
       const message = `Connect wallet with nonce: ${nonce}`;
       console.log('Message to sign:', message);
       let signature;
       try {
         signature = await signer.signMessage(message);
         console.log('Generated signature:', signature);
+        if (!signature || !signature.startsWith('0x') || signature.length !== 132) {
+          throw new Error('Invalid signature format generated');
+        }
       } catch (signError) {
         console.error('Signing error:', signError.message);
         throw new Error('Failed to sign message');
       }
-  
-      // 3. Send to backend
-      const payload = { walletAddress: address, signature };
+
+      // 4. Send to backend
+      const payload = { walletAddress: address, signature, email: email || undefined };
       console.log('Payload to send:', payload);
       const connectResponse = await fetch('http://localhost:3000/user/connect-wallet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-    
-  
+
       if (!connectResponse.ok) {
         const errorText = await connectResponse.text();
-        throw new Error(`Failed to connect wallet: ${errorText}`);
+        let errorMessageText = errorText;
+        try {
+          const errorJson = JSON.parse(errorText);
+          errorMessageText = errorJson.message || errorText;
+        } catch (e) {
+          // If not JSON, use raw text
+        }
+        console.error('Connect wallet error:', errorMessageText);
+        throw new Error(`Failed to connect wallet: ${errorMessageText}`);
       }
       const data = await connectResponse.json();
       console.log('Backend response:', data);
-  
+
       if (data.token) {
         localStorage.setItem('token', data.token);
         setToken(data.token);
         console.log('Wallet connected successfully:', address);
       } else {
         console.error('Failed to get token:', data.error);
+        setErrorMessage(data.error || 'Failed to connect wallet');
       }
     } catch (err) {
       console.error('Wallet connection error:', err.message);
+      setErrorMessage(err.message);
     }
   };
 
@@ -115,6 +145,23 @@ const Header = () => {
         }
       });
     }
+  };
+
+  // Modal submit handler
+  const handleEmailSubmit = () => {
+    if (window.handleModalSubmit) {
+      window.handleModalSubmit(emailInput || null); 
+    }
+    setEmailInput(''); // Reset input
+  };
+
+  // Modal skip handler
+  const handleEmailSkip = () => {
+    if (window.handleModalSubmit) {
+      window.handleModalSubmit(null); 
+    }
+    setIsEmailModalOpen(false);
+    setEmailInput('');
   };
 
   return (
@@ -171,15 +218,18 @@ const Header = () => {
             }}
           />
         </div>
-        <div className="flex items-center space-x-2 text-l text-gray-700 ml-6">
+        <div className="flex items-center space-x-2 text-xl text-gray-700 ml-6">
           <button
-            className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-xl"
+            className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
             onClick={connectWallet}
           >
             {walletAddress && walletAddress.length > 0
               ? `Connected: ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`
               : 'Connect Wallet'}
           </button>
+          {errorMessage && (
+            <span className="text-red-500 text-sm ml-2">{errorMessage}</span>
+          )}
           <button className="relative hover:text-purple-600 cursor-pointer transition">
             <IoMdNotifications />
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
@@ -194,6 +244,37 @@ const Header = () => {
           </button>
         </div>
       </nav>
+
+      {/* Email Modal */}
+      {isEmailModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Enter Your Email</h2>
+            <p className="text-gray-600 mb-4">Provide an email to receive notifications (optional).</p>
+            <input
+              type="email"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              placeholder="example@gmail.com"
+              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 mb-4"
+            />
+            <div className="flex justify-end space-x-4">
+              <button
+                onClick={handleEmailSkip}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              >
+                Skip
+              </button>
+              <button
+                onClick={handleEmailSubmit}
+                className="px-4 py-2 bg-purple-900 text-white rounded-md hover:bg-purple-700"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

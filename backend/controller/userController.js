@@ -3,6 +3,7 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const ethers = require('ethers');
 const generateToken = require('../utils/generateToken');
+const sendEmail = require('../utils/sendEmail');
 
 const getNonce = asyncHandler(async (req, res) => {
   const { walletAddress } = req.params;
@@ -26,12 +27,12 @@ const getNonce = asyncHandler(async (req, res) => {
     await user.save();
   }
 
-  console.log('User after setting nonce:', user); // Debug
+  console.log('User after setting nonce:', user);
   res.json({ nonce });
 });
 
 const connectWallet = asyncHandler(async (req, res) => {
-  const { walletAddress, signature } = req.body;
+  const { walletAddress, signature, email } = req.body;
 
   console.log('Request body:', req.body);
 
@@ -70,8 +71,33 @@ const connectWallet = asyncHandler(async (req, res) => {
     throw new Error('Signature does not match wallet address');
   }
 
+  // Declare existingUserWithEmail in outer scope
+  let existingUserWithEmail = null;
+  if (email) {
+    existingUserWithEmail = await User.findOne({ email: email.toLowerCase() });
+    if (existingUserWithEmail && existingUserWithEmail.walletAddress !== walletAddress.toLowerCase()) {
+      res.status(400);
+      throw new Error('This email is already associated with another wallet address');
+    }
+    user.email = email.toLowerCase();
+  }
+
   user.nonce = null;
   await user.save();
+
+  // Send welcome email if email is provided and it’s a new email for this user
+  if (email && (!existingUserWithEmail || existingUserWithEmail.walletAddress === walletAddress.toLowerCase())) {
+    try {
+      await sendEmail(
+        user.email,
+        'Welcome to KARA!',
+        `Hello,\n\nYour wallet (${user.walletAddress}) has been successfully connected to KARA. You can now explore the app and receive updates.\n\nThanks,\nThe KARA Team`
+      );
+    } catch (emailError) {
+      console.error('Failed to send welcome email:', emailError.message);
+      // Don’t fail the request if email fails
+    }
+  }
 
   const token = generateToken(user._id);
   res.cookie('token', token, {
@@ -85,14 +111,63 @@ const connectWallet = asyncHandler(async (req, res) => {
   res.json({
     _id: user._id,
     walletAddress: user.walletAddress,
-    firstName: user.firstName,
-    lastName: user.lastName,
+    email: user.email,
     role: user.role,
     token,
   });
 });
 
-// ... (rest of the file unchanged)
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select('-nonce');
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+  res.json({
+    _id: user._id,
+    walletAddress: user.walletAddress,
+    email: user.email,
+    role: user.role,
+  });
+});
 
-module.exports = { getNonce, connectWallet };
-// getUser, updateUser, logoutUser
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  const { email, role } = req.body;
+  if (email) {
+    const existingUserWithEmail = await User.findOne({ email: email.toLowerCase() });
+    if (existingUserWithEmail && existingUserWithEmail._id.toString() !== user._id.toString()) {
+      res.status(400);
+      throw new Error('This email is already associated with another wallet address');
+    }
+    user.email = email.toLowerCase();
+  }
+  if (role && ['buyer', 'seller', 'admin'].includes(role)) {
+    user.role = role;
+  }
+
+  const updatedUser = await user.save();
+  res.json({
+    _id: updatedUser._id,
+    walletAddress: updatedUser.walletAddress,
+    email: updatedUser.email,
+    role: updatedUser.role,
+  });
+});
+
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie('token', {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.json({ message: 'Logged out successfully' });
+});
+
+module.exports = { getNonce, connectWallet, getUser, updateUser, logoutUser };

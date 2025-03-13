@@ -7,26 +7,25 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     trim: true,
-    lowercase: true, // Normalize to lowercase for Ethereum addresses
-  },
-  firstName: {
-    type: String,
-    default: '',
-  },
-  lastName: {
-    type: String,
-    default: '',
+    lowercase: true,
   },
   role: {
     type: String,
     enum: ['buyer', 'seller', 'admin'],
     default: 'buyer',
   },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    unique: true,
+    sparse: true, 
+    match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'], // Basic email validation
+  },
   nonce: {
-    type: String, // Add nonce field
+    type: String,
     default: null,
   },
 }, { timestamps: true });
-
 
 module.exports = mongoose.model('User', userSchema);

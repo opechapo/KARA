@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+
 // CORS configuration
 app.use(cors({
   origin: (origin, callback) => {
