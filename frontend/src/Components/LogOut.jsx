@@ -1,4 +1,3 @@
-// frontend/src/components/Logout.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,22 +8,27 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem('token');
+      // Disconnect wallet
+      if (window.ethereum) {
+        await window.ethereum.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }],
+        }); // This resets the connection in MetaMask
+      }
+
+      // Clear backend token
       const response = await fetch('http://localhost:3000/user/logout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
       });
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
       }
       const data = await response.json();
-      localStorage.removeItem('token');
       setMessage(data.message);
-      setTimeout(() => navigate('/'), 1000); // Redirect to home after 1s
+      setTimeout(() => navigate('/'), 1000); // Redirect to home
     } catch (err) {
       setError(err.message);
     }
@@ -37,7 +41,7 @@ const Logout = () => {
         onClick={handleLogout}
         className="w-full bg-purple-900 text-white p-2 rounded-md hover:bg-purple-700"
       >
-        Logout
+        Logout & Disconnect Wallet
       </button>
       {message && <p className="text-green-500 mt-4">{message}</p>}
       {error && <p className="text-red-500 mt-4">{error}</p>}

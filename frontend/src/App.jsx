@@ -34,6 +34,8 @@ import AudioAndMusicInstrument from "./Categories/Electronics/AudioAndMusicInstr
 import Profile from './Components/Profile';
 import UpdateProfile from './Components/UpdateProfile';
 import Logout from './Components/LogOut';
+import Store from './Components/Store';
+
 
 // Placeholder components for My Listings and My Purchases
 const MyListings = () => <div className="p-6">My Listings Page (To Be Implemented)</div>;
@@ -82,6 +84,7 @@ function App() {
       <Route path="/my-listings" element={<MyListings />} />
       <Route path="/my-purchases" element={<MyPurchases />} />
       <Route path="/logout" element={<Logout />} />
+      <Route path="/stores" element={<Store />} />
     </Routes>
   );
 

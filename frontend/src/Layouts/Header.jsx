@@ -1,16 +1,8 @@
-// Header.jsx
+// frontend/src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IoMdNotifications, IoMdCart } from 'react-icons/io';
-import {
-  FaBars,
-  FaUser,
-  FaUserCircle,      // Profile
-  FaUserEdit,         // Update Profile
-  FaListAlt,          // My Listings
-  FaShoppingBag,      // My Purchases
-  FaSignOutAlt,       // Logout
-} from 'react-icons/fa';
+import { FaBars, FaUser, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import kara from '../assets/KARA.png';
 import { ethers } from 'ethers';
 
@@ -24,7 +16,7 @@ const Header = () => {
   const location = useLocation();
   const [walletAddress, setWalletAddress] = useState('');
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
+  const [token, setToken] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [emailInput, setEmailInput] = useState('');
@@ -34,16 +26,6 @@ const Header = () => {
     getCurrentWalletConnected();
     addWalletListener();
   }, []);
-
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (isDropdownOpen && !e.target.closest('.relative')) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener('click', handleOutsideClick);
-    return () => document.removeEventListener('click', handleOutsideClick);
-  }, [isDropdownOpen]);
 
   const connectWallet = async () => {
     if (typeof window.ethereum === 'undefined') {
@@ -74,9 +56,7 @@ const Header = () => {
 
       setIsEmailModalOpen(true);
       const email = await new Promise((resolve) => {
-        const handleModalSubmit = (submittedEmail) => {
-          resolve(submittedEmail);
-        };
+        const handleModalSubmit = (submittedEmail) => resolve(submittedEmail);
         window.handleModalSubmit = handleModalSubmit;
       });
       console.log('Provided email:', email);
@@ -102,28 +82,20 @@ const Header = () => {
       const connectResponse = await fetch('http://localhost:3000/user/connect-wallet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(payload),
       });
 
       if (!connectResponse.ok) {
         const errorText = await connectResponse.text();
-        let errorMessageText = errorText;
-        try {
-          const errorJson = JSON.parse(errorText);
-          errorMessageText = errorJson.message || errorText;
-        } catch (e) {
-          // If not JSON, use raw text
-        }
-        console.error('Connect wallet error:', errorMessageText);
-        throw new Error(`Failed to connect wallet: ${errorMessageText}`);
+        console.error('Connect wallet failed with status:', connectResponse.status, 'Response:', errorText);
+        throw new Error(`Failed to connect wallet: ${errorText}`);
       }
       const data = await connectResponse.json();
       console.log('Backend response:', data);
 
       if (data.token) {
         console.log('Received token:', data.token);
-        localStorage.setItem('token', data.token);
-        console.log('Token stored in localStorage:', localStorage.getItem('token'));
         setToken(data.token);
         console.log('Wallet connected successfully:', address);
       } else {
@@ -158,7 +130,6 @@ const Header = () => {
         } else {
           setWalletAddress('');
           setToken('');
-          localStorage.removeItem('token');
         }
       });
     }
@@ -261,30 +232,6 @@ const Header = () => {
                     Profile
                   </Link>
                   <Link
-                    to="/update-profile"
-                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <FaUserEdit className="mr-2" />
-                    Update Profile
-                  </Link>
-                  <Link
-                    to="/my-listings"
-                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <FaListAlt className="mr-2" />
-                    My Listings
-                  </Link>
-                  <Link
-                    to="/my-purchases"
-                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
-                    onClick={() => setIsDropdownOpen(false)}
-                  >
-                    <FaShoppingBag className="mr-2" />
-                    My Purchases
-                  </Link>
-                  <Link
                     to="/logout"
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
                     onClick={() => setIsDropdownOpen(false)}
@@ -314,7 +261,6 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Email Modal */}
       {isEmailModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">

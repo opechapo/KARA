@@ -29,6 +29,8 @@ const getNonce = asyncHandler(async (req, res) => {
   res.json({ nonce });
 });
 
+// Connect wallet
+
 const connectWallet = asyncHandler(async (req, res) => {
   const { walletAddress, signature, email } = req.body;
 
@@ -100,8 +102,8 @@ const connectWallet = asyncHandler(async (req, res) => {
     path: '/',
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
-    sameSite: 'none',
-    secure: true,
+    // sameSite: 'none',
+    // secure: true,
   });
   res.json({
     _id: user._id,
@@ -110,6 +112,8 @@ const connectWallet = asyncHandler(async (req, res) => {
     token,
   });
 });
+
+//  Get User
 
 const getUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).select('-nonce');
@@ -124,6 +128,8 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
+
+//  Update User
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) {
@@ -131,7 +137,7 @@ const updateUser = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 
-  const { email } = req.body;
+  const { email, displayName } = req.body;
   if (email) {
     const existingUserWithEmail = await User.findOne({ email: email.toLowerCase() });
     if (existingUserWithEmail && existingUserWithEmail._id.toString() !== user._id.toString()) {
@@ -140,12 +146,21 @@ const updateUser = asyncHandler(async (req, res) => {
     }
     user.email = email.toLowerCase();
   }
+  if (displayName) user.displayName = displayName;
+  if (req.files && req.files.avatar) {
+    const avatar = req.files.avatar;
+    const avatarUrl = `/uploads/${avatar.name}`; // Adjust path as needed
+    await avatar.mv(`./public${avatarUrl}`); // Requires 'express-fileupload'
+    user.avatarUrl = avatarUrl;
+  }
 
   const updatedUser = await user.save();
   res.json({
     _id: updatedUser._id,
     walletAddress: updatedUser.walletAddress,
     email: updatedUser.email,
+    displayName: updatedUser.displayName,
+    avatarUrl: updatedUser.avatarUrl,
   });
 });
 

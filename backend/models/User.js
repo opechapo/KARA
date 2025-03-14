@@ -1,3 +1,4 @@
+// backend/models/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -14,6 +15,15 @@ const userSchema = new mongoose.Schema({
     unique: true,
     sparse: true,
     match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
+  },
+  displayName: {
+    type: String,
+    trim: true,
+    maxLength: 50,
+  },
+  avatarUrl: {
+    type: String,
+    trim: true,
   },
   nonce: {
     type: String,

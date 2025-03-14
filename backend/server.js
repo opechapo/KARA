@@ -1,4 +1,3 @@
-// server.js
 require('dotenv').config();
 console.log('Environment Variables:', {
   JWT_SECRET: process.env.JWT_SECRET,
@@ -13,6 +12,8 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./route/userRoutes');
 const productRoutes = require('./route/productRoutes');
 const orderRoutes = require('./route/orderRoutes');
+const storeRoutes = require('./routes/storeRoutes');
+const fileUpload = require('express-fileupload');
 
 const PORT = process.env.PORT || 3000;
 
@@ -20,18 +21,20 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(fileUpload());
 
 
 // CORS configuration
 app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = ['http://localhost:5173', process.env.FRONTEND_URL];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  // origin: (origin, callback) => {
+  //   const allowedOrigins = ['http://localhost:5173', process.env.FRONTEND_URL];
+  //   if (!origin || allowedOrigins.includes(origin)) {
+  //     callback(null, true);
+  //   } else {
+  //     callback(new Error('Not allowed by CORS'));
+  //   }
+  // },
+  origin: 'http://localhost:5173',
   credentials: true,
   methods: 'GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS',
   allowedHeaders: 'Content-Type, Authorization',
@@ -41,6 +44,7 @@ app.use(cors({
 app.use('/user', userRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/stores', storeRoutes);
 
 app.get('/', (req, res) => res.send('Hello World'));
 
