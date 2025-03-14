@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -6,26 +5,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true,
     lowercase: true,
-  },
-  role: {
-    type: String,
-    enum: ['buyer', 'seller', 'admin'],
-    default: 'buyer',
   },
   email: {
     type: String,
     trim: true,
     lowercase: true,
     unique: true,
-    sparse: true, 
-    match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'], // Basic email validation
+    sparse: true,
+    match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address'],
   },
   nonce: {
     type: String,
-    default: null,
   },
-}, { timestamps: true });
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 module.exports = mongoose.model('User', userSchema);

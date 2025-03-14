@@ -1,6 +1,6 @@
 // testEmail.js
-require('dotenv').config();
-const nodemailer = require('nodemailer');
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 async function testEmail() {
   const transporter = nodemailer.createTransport({
@@ -15,16 +15,16 @@ async function testEmail() {
 
   const mailOptions = {
     from: `"KARA Test" <${process.env.EMAIL_USER}>`,
-    to: 'phonemask000@gmail.com', // Replace with a valid recipient email
-    subject: 'Test Email from KARA',
-    text: 'This is a test email to verify Gmail SMTP.',
+    to: "phonemask000@gmail.com", // Replace with a valid recipient email
+    subject: "Test Email from KARA",
+    text: "This is a test email to verify Gmail SMTP.",
   };
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Test email sent:', info.messageId);
+    console.log("Test email sent:", info.messageId);
   } catch (error) {
-    console.error('Test email error:', error.message);
+    console.error("Test email error:", error.message);
   }
 }
 

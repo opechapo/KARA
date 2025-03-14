@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Header from './Layouts/Header';
 import LandingPage from "./landingPage";
 import React from "react";
 import Electronics from "./Categories/Electronics";
@@ -9,7 +8,6 @@ import Fashion from "./Categories/Fashion";
 import HomeGardens from "./Categories/Home&Garden";
 import AboutUs from "./Layouts/Pages/AboutUs";
 import Cars from "./Categories/Vehicles/Cars/Cars";
-// import MercedesGwagon from './Categories/Cars/mercedesGwagon';
 import MercedesGwagon from "./Categories/Vehicles/Cars/MercedesGwagon";
 import Stores from "./Layouts/Pages/Stores";
 import Collections from "./Layouts/Pages/Collections";
@@ -33,6 +31,13 @@ import Clothings from "./Categories/Fashions/Clothings";
 import Watches from "./Categories/Fashions/Watches";
 import Shoes from "./Categories/Fashions/Shoes";
 import AudioAndMusicInstrument from "./Categories/Electronics/AudioAndMusicInstrument";
+import Profile from './Components/Profile';
+import UpdateProfile from './Components/UpdateProfile';
+import Logout from './Components/LogOut';
+
+// Placeholder components for My Listings and My Purchases
+const MyListings = () => <div className="p-6">My Listings Page (To Be Implemented)</div>;
+const MyPurchases = () => <div className="p-6">My Purchases Page (To Be Implemented)</div>;
 
 function App() {
   const RenderRoute = () => (
@@ -72,6 +77,11 @@ function App() {
       <Route path="/fashion/shoes" element={<Shoes />} />
       <Route path="/electronics/audioandmusicinstrument" element={<AudioAndMusicInstrument />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/update-profile" element={<UpdateProfile />} />
+      <Route path="/my-listings" element={<MyListings />} />
+      <Route path="/my-purchases" element={<MyPurchases />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   );
 

@@ -2,7 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IoMdNotifications, IoMdCart } from 'react-icons/io';
-import { FaBars } from 'react-icons/fa';
+import {
+  FaBars,
+  FaUser,
+  FaUserCircle,      // Profile
+  FaUserEdit,         // Update Profile
+  FaListAlt,          // My Listings
+  FaShoppingBag,      // My Purchases
+  FaSignOutAlt,       // Logout
+} from 'react-icons/fa';
 import kara from '../assets/KARA.png';
 import { ethers } from 'ethers';
 
@@ -18,13 +26,24 @@ const Header = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false); // Modal state
-  const [emailInput, setEmailInput] = useState(''); // Email input state
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     getCurrentWalletConnected();
     addWalletListener();
   }, []);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (isDropdownOpen && !e.target.closest('.relative')) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [isDropdownOpen]);
 
   const connectWallet = async () => {
     if (typeof window.ethereum === 'undefined') {
@@ -43,7 +62,6 @@ const Header = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
-      // 1. Get nonce
       console.log('Fetching nonce from:', `http://localhost:3000/user/nonce/${address}`);
       const nonceResponse = await fetch(`http://localhost:3000/user/nonce/${address}`);
       if (!nonceResponse.ok) {
@@ -54,19 +72,17 @@ const Header = () => {
       const { nonce } = await nonceResponse.json();
       console.log('Received nonce:', nonce);
 
-      // 2. Open email modal instead of prompt
       setIsEmailModalOpen(true);
       const email = await new Promise((resolve) => {
         const handleModalSubmit = (submittedEmail) => {
           resolve(submittedEmail);
         };
-        window.handleModalSubmit = handleModalSubmit; 
+        window.handleModalSubmit = handleModalSubmit;
       });
       console.log('Provided email:', email);
       setIsEmailModalOpen(false);
       delete window.handleModalSubmit;
 
-      // 3. Sign the message
       const message = `Connect wallet with nonce: ${nonce}`;
       console.log('Message to sign:', message);
       let signature;
@@ -81,7 +97,6 @@ const Header = () => {
         throw new Error('Failed to sign message');
       }
 
-      // 4. Send to backend
       const payload = { walletAddress: address, signature, email: email || undefined };
       console.log('Payload to send:', payload);
       const connectResponse = await fetch('http://localhost:3000/user/connect-wallet', {
@@ -106,7 +121,9 @@ const Header = () => {
       console.log('Backend response:', data);
 
       if (data.token) {
+        console.log('Received token:', data.token);
         localStorage.setItem('token', data.token);
+        console.log('Token stored in localStorage:', localStorage.getItem('token'));
         setToken(data.token);
         console.log('Wallet connected successfully:', address);
       } else {
@@ -147,18 +164,16 @@ const Header = () => {
     }
   };
 
-  // Modal submit handler
   const handleEmailSubmit = () => {
     if (window.handleModalSubmit) {
-      window.handleModalSubmit(emailInput || null); 
+      window.handleModalSubmit(emailInput || null);
     }
-    setEmailInput(''); // Reset input
+    setEmailInput('');
   };
 
-  // Modal skip handler
   const handleEmailSkip = () => {
     if (window.handleModalSubmit) {
-      window.handleModalSubmit(null); 
+      window.handleModalSubmit(null);
     }
     setIsEmailModalOpen(false);
     setEmailInput('');
@@ -218,15 +233,69 @@ const Header = () => {
             }}
           />
         </div>
-        <div className="flex items-center space-x-2 text-xl text-gray-700 ml-6">
-          <button
-            className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
-            onClick={connectWallet}
-          >
-            {walletAddress && walletAddress.length > 0
-              ? `Connected: ${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`
-              : 'Connect Wallet'}
-          </button>
+        <div className="flex items-center space-x-4 text-xl text-gray-700 ml-6">
+          {!walletAddress ? (
+            <button
+              className="hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
+              onClick={connectWallet}
+            >
+              Connect Wallet
+            </button>
+          ) : (
+            <div className="relative">
+              <button
+                className="flex items-center space-x-2 hover:bg-purple-700 cursor-pointer transition bg-purple-900 text-white px-2 py-1 font-small rounded-2xl"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <FaUser />
+                <span>{`${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`}</span>
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50">
+                  <Link
+                    to="/profile"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <FaUserCircle className="mr-2" />
+                    Profile
+                  </Link>
+                  <Link
+                    to="/update-profile"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <FaUserEdit className="mr-2" />
+                    Update Profile
+                  </Link>
+                  <Link
+                    to="/my-listings"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <FaListAlt className="mr-2" />
+                    My Listings
+                  </Link>
+                  <Link
+                    to="/my-purchases"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <FaShoppingBag className="mr-2" />
+                    My Purchases
+                  </Link>
+                  <Link
+                    to="/logout"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <FaSignOutAlt className="mr-2" />
+                    Logout
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
           {errorMessage && (
             <span className="text-red-500 text-sm ml-2">{errorMessage}</span>
           )}

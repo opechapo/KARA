@@ -1,4 +1,3 @@
-// controllers/userController.js
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const ethers = require('ethers');
@@ -19,7 +18,6 @@ const getNonce = asyncHandler(async (req, res) => {
   if (!user) {
     user = await User.create({
       walletAddress: walletAddress.toLowerCase(),
-      role: 'buyer',
       nonce,
     });
   } else {
@@ -71,7 +69,6 @@ const connectWallet = asyncHandler(async (req, res) => {
     throw new Error('Signature does not match wallet address');
   }
 
-  // Declare existingUserWithEmail in outer scope
   let existingUserWithEmail = null;
   if (email) {
     existingUserWithEmail = await User.findOne({ email: email.toLowerCase() });
@@ -85,21 +82,20 @@ const connectWallet = asyncHandler(async (req, res) => {
   user.nonce = null;
   await user.save();
 
-  // Send welcome email if email is provided and it’s a new email for this user
   if (email && (!existingUserWithEmail || existingUserWithEmail.walletAddress === walletAddress.toLowerCase())) {
     try {
       await sendEmail(
         user.email,
         'Welcome to KARA!',
-        `Hello,\n\nYour wallet (${user.walletAddress}) has been successfully connected to KARA. You can now explore the app and receive updates.\n\nThanks,\nThe KARA Team`
+        `Hello,\n\nYour wallet (${user.walletAddress}) has been successfully connected to KARA. You can now buy and sell on the platform.\n\nThanks,\nThe KARA Team`
       );
     } catch (emailError) {
       console.error('Failed to send welcome email:', emailError.message);
-      // Don’t fail the request if email fails
     }
   }
 
   const token = generateToken(user._id);
+  console.log('Generated token:', token);
   res.cookie('token', token, {
     path: '/',
     httpOnly: true,
@@ -107,12 +103,10 @@ const connectWallet = asyncHandler(async (req, res) => {
     sameSite: 'none',
     secure: true,
   });
-
   res.json({
     _id: user._id,
     walletAddress: user.walletAddress,
     email: user.email,
-    role: user.role,
     token,
   });
 });
@@ -127,7 +121,6 @@ const getUser = asyncHandler(async (req, res) => {
     _id: user._id,
     walletAddress: user.walletAddress,
     email: user.email,
-    role: user.role,
   });
 });
 
@@ -138,7 +131,7 @@ const updateUser = asyncHandler(async (req, res) => {
     throw new Error('User not found');
   }
 
-  const { email, role } = req.body;
+  const { email } = req.body;
   if (email) {
     const existingUserWithEmail = await User.findOne({ email: email.toLowerCase() });
     if (existingUserWithEmail && existingUserWithEmail._id.toString() !== user._id.toString()) {
@@ -147,16 +140,12 @@ const updateUser = asyncHandler(async (req, res) => {
     }
     user.email = email.toLowerCase();
   }
-  if (role && ['buyer', 'seller', 'admin'].includes(role)) {
-    user.role = role;
-  }
 
   const updatedUser = await user.save();
   res.json({
     _id: updatedUser._id,
     walletAddress: updatedUser.walletAddress,
     email: updatedUser.email,
-    role: updatedUser.role,
   });
 });
 
