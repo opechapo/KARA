@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./route/userRoutes');
 const productRoutes = require('./route/productRoutes');
 const orderRoutes = require('./route/orderRoutes');
-const storeRoutes = require('./routes/storeRoutes');
+const storeRoutes = require('./route/storeRoutes');
 const fileUpload = require('express-fileupload');
 
 const PORT = process.env.PORT || 3000;
