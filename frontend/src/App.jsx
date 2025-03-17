@@ -56,8 +56,9 @@ function App() {
         path="/vehicles/motorcycleandtricycle"
         element={<MotorcycleAndTricycle />}
       />
+      
       <Route path="/vehicles/truckandtrailer" element={<TruckAndTrailer />} />
-      <Route path="/heavyduty" element={<HeavyDuty />} />
+      <Route path="/vehicles/heavyduty" element={<HeavyDuty />} />
       <Route path="/mercedesgwagon" element={<MercedesGwagon />} />
       <Route path="/mobilephoneandtabs" element={<MobilePhoneAndTabs />} />
       <Route path="/mobilephone" element={<MobilePhone />} />

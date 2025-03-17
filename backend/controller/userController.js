@@ -113,10 +113,13 @@ const connectWallet = asyncHandler(async (req, res) => {
   });
 });
 
+
 //  Get User
 
 const getUser = asyncHandler(async (req, res) => {
+  console.log('req.user:', req.user); // Debug
   const user = await User.findById(req.user._id).select('-nonce');
+  console.log('Found user:', user); // Debug
   if (!user) {
     res.status(404);
     throw new Error('User not found');
