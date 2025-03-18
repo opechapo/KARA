@@ -171,7 +171,7 @@ const Header = () => {
                   <li><Link to="/electronics" className="block hover:text-purple-600">Electronics</Link></li>
                   <li><Link to="/mobilephoneandtabs" className="block hover:text-purple-600">Mobile Phones & Tabs</Link></li>
                   <li><Link to="/vehicles" className="block hover:text-purple-600">Vehicles</Link></li>
-                  <li><Link to="/fashion" className="block hover:text-purple-600">Fashion</Link></li>
+                  <li><Link to="/fashion" className="block hover:text-purple-600">Fashions</Link></li>
                   <li><Link to="/home&garden" className="block hover:text-purple-600">Home & Gardens</Link></li>
                 </ul>
               </div>
@@ -184,6 +184,7 @@ const Header = () => {
               className={`text-lg font-medium text-gray-700 hover:text-purple-600 transition ${
                 location.pathname === link ? 'text-purple-700 font-semibold' : ''
               }`}
+            
             >
               {title}
             </Link>
