@@ -4,6 +4,7 @@ const authMiddleware = async (req, res, next) => {
   console.log('Request cookies:', req.cookies); // Debug
   console.log('Request headers:', req.headers);
   const token = req.headers.authorization?.split(' ')[1] || req.cookies.token;
+  console.log('Token:', token); 
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided' });

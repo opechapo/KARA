@@ -102,9 +102,9 @@ const connectWallet = asyncHandler(async (req, res) => {
     path: '/',
     httpOnly: true,
     expires: new Date(Date.now() + 1000 * 86400),
-    // sameSite: 'none',
-    // secure: true,
   });
+  console.log('Setting cookie with token:', token);
+  console.log('Cookie set, sending response');
   res.json({
     _id: user._id,
     walletAddress: user.walletAddress,

@@ -33,27 +33,29 @@ const Header = () => {
       setErrorMessage('Please install MetaMask to connect your wallet');
       return;
     }
-
+  
     try {
+      console.log('Requesting accounts from MetaMask...');
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const address = accounts[0];
       console.log('Connected address:', address);
       setWalletAddress(address);
       setErrorMessage('');
-
+  
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-
-      console.log('Fetching nonce from:', `http://localhost:3000/user/nonce/${address}`);
+  
+      console.log('Fetching nonce for address:', address);
       const nonceResponse = await fetch(`http://localhost:3000/user/nonce/${address}`);
       if (!nonceResponse.ok) {
         const errorText = await nonceResponse.text();
-        console.error('Nonce fetch response:', errorText);
+        console.error('Nonce fetch failed with status:', nonceResponse.status, 'Response:', errorText);
         throw new Error(`Failed to fetch nonce: ${errorText}`);
       }
       const { nonce } = await nonceResponse.json();
       console.log('Received nonce:', nonce);
-
+  
+      console.log('Opening email modal...');
       setIsEmailModalOpen(true);
       const email = await new Promise((resolve) => {
         const handleModalSubmit = (submittedEmail) => resolve(submittedEmail);
@@ -62,21 +64,12 @@ const Header = () => {
       console.log('Provided email:', email);
       setIsEmailModalOpen(false);
       delete window.handleModalSubmit;
-
+  
       const message = `Connect wallet with nonce: ${nonce}`;
       console.log('Message to sign:', message);
-      let signature;
-      try {
-        signature = await signer.signMessage(message);
-        console.log('Generated signature:', signature);
-        if (!signature || !signature.startsWith('0x') || signature.length !== 132) {
-          throw new Error('Invalid signature format generated');
-        }
-      } catch (signError) {
-        console.error('Signing error:', signError.message);
-        throw new Error('Failed to sign message');
-      }
-
+      const signature = await signer.signMessage(message);
+      console.log('Generated signature:', signature);
+  
       const payload = { walletAddress: address, signature, email: email || undefined };
       console.log('Payload to send:', payload);
       const connectResponse = await fetch('http://localhost:3000/user/connect-wallet', {
@@ -85,22 +78,24 @@ const Header = () => {
         credentials: 'include',
         body: JSON.stringify(payload),
       });
-
+  
+      const responseText = await connectResponse.text();
+      console.log('Raw backend response:', responseText);
       if (!connectResponse.ok) {
-        const errorText = await connectResponse.text();
-        console.error('Connect wallet failed with status:', connectResponse.status, 'Response:', errorText);
-        throw new Error(`Failed to connect wallet: ${errorText}`);
+        console.error('Connect wallet failed with status:', connectResponse.status, 'Response:', responseText);
+        throw new Error(`Failed to connect wallet: ${responseText}`);
       }
-      const data = await connectResponse.json();
-      console.log('Backend response:', data);
-
+      const data = JSON.parse(responseText);
+      console.log('Parsed backend response:', data);
+  
       if (data.token) {
-        console.log('Received token:', data.token);
+        localStorage.setItem('token', data.token);
         setToken(data.token);
+        console.log('Stored token in localStorage:', data.token);
         console.log('Wallet connected successfully:', address);
       } else {
-        console.error('Failed to get token:', data.error);
-        setErrorMessage(data.error || 'Failed to connect wallet');
+        console.error('No token in response:', data);
+        setErrorMessage('No token received from server');
       }
     } catch (err) {
       console.error('Wallet connection error:', err.message);
@@ -220,7 +215,7 @@ const Header = () => {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <FaUser />
-                <span>{`${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`}</span>
+                {/* <span>{`${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`}</span> */}
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50">
@@ -232,6 +227,7 @@ const Header = () => {
                     <FaUserCircle className="mr-2" />
                     Profile
                   </Link>
+
                   <Link
                     to="/logout"
                     className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"

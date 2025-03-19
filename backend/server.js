@@ -26,15 +26,7 @@ app.use(fileUpload());
 
 // CORS configuration
 app.use(cors({
-  // origin: (origin, callback) => {
-  //   const allowedOrigins = ['http://localhost:5173', process.env.FRONTEND_URL];
-  //   if (!origin || allowedOrigins.includes(origin)) {
-  //     callback(null, true);
-  //   } else {
-  //     callback(new Error('Not allowed by CORS'));
-  //   }
-  // },
-  origin: 'http://localhost:5173',
+  origin: true, // Allow all origins for testing
   credentials: true,
   methods: 'GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS',
   allowedHeaders: 'Content-Type, Authorization',

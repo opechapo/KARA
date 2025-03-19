@@ -11,13 +11,14 @@ const Order = require('../models/Order'); // Import Order model
 router.get('/nonce/:walletAddress', getNonce);
 router.post('/connect-wallet', connectWallet);
 router.get('/profile', authMiddleware, getUser);
-router.put('/profile', authMiddleware, updateUser);
+// router.put('/profile', authMiddleware, updateUser);
 router.post('/logout', authMiddleware, logoutUser);
 
 router.get('/listings', authMiddleware, asyncHandler(async (req, res) => {
   const products = await Product.find({ seller: req.user._id });
   res.json(products);
 }));
+
 
 router.get('/purchases', authMiddleware, asyncHandler(async (req, res) => {
   const orders = await Order.find({ buyer: req.user._id })

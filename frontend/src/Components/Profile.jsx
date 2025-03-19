@@ -12,9 +12,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        const token = localStorage.getItem('token');
+      console.log('Sending token:', token); 
         const response = await fetch('http://localhost:3000/user/profile', {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json','Authorization': `Bearer ${token || ''}` },
           credentials: 'include',
         });
         if (!response.ok) {
