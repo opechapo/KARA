@@ -72,11 +72,15 @@ const Profile = () => {
       {/* Left Side */}
       <div className="w-1/3 bg-white rounded-lg shadow-md p-4">
         <div className="flex flex-col items-center">
-          <img
-            src={user.avatarUrl || 'https://via.placeholder.com/150'}
-            alt="Profile"
-            className="w-32 h-32 rounded-full mb-4 object-cover"
-          />
+        <img
+  src={user.avatarUrl ? `http://localhost:3000${user.avatarUrl}` : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg=='}
+  alt="Profile"
+  className="w-32 h-32 rounded-full mb-4 object-cover"
+  onError={(e) => {
+    console.log('Image load error for:', user.avatarUrl);
+    e.target.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==';
+  }}
+/>
           <input
             type="file"
             accept="image/*"

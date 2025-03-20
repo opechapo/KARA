@@ -162,8 +162,7 @@ const updateUser = asyncHandler(async (req, res) => {
     _id: updatedUser._id,
     walletAddress: updatedUser.walletAddress,
     email: updatedUser.email,
-    displayName: updatedUser.displayName,
-    avatarUrl: updatedUser.avatarUrl,
+    avatarUrl: user.avatarUrl,
   });
 });
 

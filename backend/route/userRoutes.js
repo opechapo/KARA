@@ -6,13 +6,13 @@ const asyncHandler = require('express-async-handler'); // Add this import
 const Product = require('../models/Product'); // Import Product model
 const Order = require('../models/Order'); // Import Order model
 
-
-
 router.get('/nonce/:walletAddress', getNonce);
 router.post('/connect-wallet', connectWallet);
 router.get('/profile', authMiddleware, getUser);
-// router.put('/profile', authMiddleware, updateUser);
+router.put('/profile', authMiddleware, updateUser);
 router.post('/logout', authMiddleware, logoutUser);
+
+
 
 router.get('/listings', authMiddleware, asyncHandler(async (req, res) => {
   const products = await Product.find({ seller: req.user._id });

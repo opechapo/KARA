@@ -9,19 +9,29 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
 const userRoutes = require('./route/userRoutes');
 const productRoutes = require('./route/productRoutes');
 const orderRoutes = require('./route/orderRoutes');
 const storeRoutes = require('./route/storeRoutes');
-const fileUpload = require('express-fileupload');
+const path = require('path');
+const fs = require('fs'); 
 
 const PORT = process.env.PORT || 3000;
+
+// Create uploads directory if it doesn’t exist
+const uploadDir = path.join(__dirname, 'public', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log('Created uploads directory:', uploadDir);
+}
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // CORS configuration
