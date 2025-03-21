@@ -32,9 +32,11 @@ import Watches from "./Categories/Fashions/Watches";
 import Shoes from "./Categories/Fashions/Shoes";
 import AudioAndMusicInstrument from "./Categories/Electronics/AudioAndMusicInstrument";
 import Profile from './Components/Profile';
-import UpdateProfile from './Components/UpdateProfile';
 import Logout from './Components/LogOut';
 import Store from './Components/Store';
+import CreateStore from "./Components/createStore";
+import CreateCollection from './Components/CreateCollection';
+import CreateProduct from './components/CreateProduct';
 
 
 // Placeholder components for My Listings and My Purchases
@@ -81,11 +83,15 @@ function App() {
       <Route path="/electronics/audioandmusicinstrument" element={<AudioAndMusicInstrument />} />
       <Route path="/cubannaautosstores" element={<CubannaAutosStores />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/update-profile" element={<UpdateProfile />} />
+      <Route path="/create-store" element={<CreateStore />} />
       <Route path="/my-listings" element={<MyListings />} />
       <Route path="/my-purchases" element={<MyPurchases />} />
       <Route path="/logout" element={<Logout />} />
       <Route path="/stores" element={<Store />} />
+      <Route path="/create-product" element={<CreateProduct />} />
+      <Route path="/create-collection" element={<CreateCollection />} />
+      {/* Optional: Fallback for unmatched routes */}
+      <Route path="*" element={<div>404 - Page Not Found</div>} />
     </Routes>
   );
 

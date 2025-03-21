@@ -3,6 +3,7 @@ console.log('Environment Variables:', {
   JWT_SECRET: process.env.JWT_SECRET,
   MONGO_URI: process.env.MONGODB_URI,
 });
+
 const mongoose = require('mongoose');
 const connectDb = require('./config/db');
 const express = require('express');
@@ -14,6 +15,8 @@ const userRoutes = require('./route/userRoutes');
 const productRoutes = require('./route/productRoutes');
 const orderRoutes = require('./route/orderRoutes');
 const storeRoutes = require('./route/storeRoutes');
+const collectionRoutes = require('./route/collectionRoutes');
+// const productRoutes = require('./route/productRoutes');
 const path = require('path');
 const fs = require('fs'); 
 
@@ -47,6 +50,8 @@ app.use('/user', userRoutes);
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
 app.use('/stores', storeRoutes);
+app.use('/collections', collectionRoutes);
+app.use('/products', productRoutes);
 
 app.get('/', (req, res) => res.send('Hello World'));
 

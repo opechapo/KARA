@@ -1,14 +1,14 @@
+// models/Store.js
 const mongoose = require('mongoose');
 
 const storeSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   description: { type: String, required: true },
+  slogan: { type: String, trim: true },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  collections: [{
-    name: { type: String, required: true },
-    category: { type: String, enum: ['Electronics', 'Smart Phones & Tabs', 'Homes & Gardens', 'Fashion', 'Vehicles'], required: true },
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
-  }],
+  bannerImage: { type: String, trim: true },
+  featuredImage: { type: String, trim: true },
+  logo: { type: String, trim: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Store', storeSchema);

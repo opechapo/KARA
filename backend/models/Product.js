@@ -1,20 +1,25 @@
+// models/Product.js
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-  name: {  // Product name
-    type: String,
-    required: true,
-    trim: true,
+  name: { type: String, required: true, trim: true },
+  shortDescription: { type: String, required: true },
+  store: { type: mongoose.Schema.Types.ObjectId, ref: 'Store', required: true },
+  category: { 
+    type: String, 
+    enum: ['Electronics', 'Smart Phones & Tabs', 'Homes & Gardens', 'Fashion', 'Vehicles'], 
+    required: true 
   },
-  description: { type: String, required: true },
-  price: { type: Number, required: true, min: 0, },
-  stock: { type: Number, required: true, min: 0, default: 0 },
-  category: { type: String, required: true, enum: ['Electronics','Smart Phones & Tabs','Homes & Gardens', 'Fashion', 'Vehicles'] },
-  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  imageUrl: {
-    type: String,
-    default: '',}
+  collection: { type: mongoose.Schema.Types.ObjectId, ref: 'Collection', required: true },
+  description: { type: String, trim: true },
+  amount: { type: Number, required: true },
+  price: { type: Number, required: true },
+  paymentToken: { type: String, required: true },
+  generalImage: { type: String, required: true },
+  escrowSystem: { type: String, enum: ['Deposit', 'Guarantor'], required: true },
+  vendorDeposit: { type: Number, required: function() { return this.escrowSystem === 'Deposit'; } },
+  customerDeposit: { type: Number, required: function() { return this.escrowSystem === 'Deposit'; } },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true });
-
 
 module.exports = mongoose.model('Product', productSchema);

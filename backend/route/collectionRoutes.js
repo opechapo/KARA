@@ -1,10 +1,10 @@
-// route/productRoutes.js
+// route/collectionRoutes.js
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const Product = require('../models/Product');
-const path = require('path');
+const Collection = require('../models/Collection');
 
+// Authentication middleware
 const protect = asyncHandler(async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) {
@@ -22,31 +22,39 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
+// Get all collections for the authenticated user
+router.get(
+  '/',
+  protect,
+  asyncHandler(async (req, res) => {
+    const collections = await Collection.find({ owner: req.user._id });
+    res.json(collections);
+  })
+);
+
+// POST route (already exists, included for completeness)
 router.post(
   '/',
   protect,
   asyncHandler(async (req, res) => {
-    const {
-      name, shortDescription, store, category, collection, description,
-      amount, price, paymentToken, escrowSystem, vendorDeposit, customerDeposit
-    } = req.body;
-
-    const product = new Product({
-      name, shortDescription, store, category, collection, description,
-      amount, price, paymentToken, escrowSystem,
-      vendorDeposit: escrowSystem === 'Deposit' ? vendorDeposit : undefined,
-      customerDeposit: escrowSystem === 'Deposit' ? customerDeposit : undefined,
+    const { name, shortDescription, store, category, description } = req.body;
+    const collection = new Collection({
+      name,
+      shortDescription,
+      store,
+      category,
+      description,
       owner: req.user._id,
     });
 
     if (req.files && req.files.generalImage) {
       const imagePath = `/uploads/${req.files.generalImage.name}`;
       await req.files.generalImage.mv(path.join(__dirname, '..', 'public', imagePath));
-      product.generalImage = imagePath;
+      collection.generalImage = imagePath;
     }
 
-    const createdProduct = await product.save();
-    res.status(201).json(createdProduct);
+    const createdCollection = await collection.save();
+    res.status(201).json(createdCollection);
   })
 );
 
