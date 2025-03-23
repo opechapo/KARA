@@ -1,11 +1,12 @@
-// frontend/src/components/Header.jsx
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoMdNotifications, IoMdCart } from 'react-icons/io';
 import { FaBars, FaUser, FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import kara from '../assets/KARA.png';
 import { ethers } from 'ethers';
+// const ethers = window.ethers;
 
+// const navigate = useNavigate();
 const navItems = [
   { title: 'Stores', link: '/stores' },
   { title: 'Collections', link: '/collections' },
@@ -16,115 +17,123 @@ const Header = () => {
   const location = useLocation();
   const [walletAddress, setWalletAddress] = useState('');
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [errorMessage, setErrorMessage] = useState('');
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
   const [emailInput, setEmailInput] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    getCurrentWalletConnected();
-    addWalletListener();
-  }, []);
+    const initializeWallet = async () => {
+      await getCurrentWalletConnected();
+      addWalletListener();
+      const storedToken = localStorage.getItem('token');
+      setToken(storedToken || '');
+    };
+    initializeWallet();
+  }, []); // Empty dependency array to run only once on mount
+
+  // Add separate useEffect for walletAddress changes
+useEffect(() => {
+  const handleWalletChange = async () => {
+    const storedToken = localStorage.getItem('token');
+    if (walletAddress && !storedToken) {
+      console.log('Wallet connected but no token, authenticating...');
+      await connectWallet();
+    }
+  };
+  handleWalletChange();
+}, [walletAddress]);
+
+
 
   const connectWallet = async () => {
-    if (typeof window.ethereum === 'undefined') {
-      console.log('Please install MetaMask to connect your wallet');
-      setErrorMessage('Please install MetaMask to connect your wallet');
+    if (!window.ethereum) {
+      setErrorMessage('Please install MetaMask');
       return;
     }
-  
     try {
-      console.log('Requesting accounts from MetaMask...');
+      console.log('Requesting accounts...');
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
       const address = accounts[0];
-      console.log('Connected address:', address);
+      console.log('Got address:', address);
       setWalletAddress(address);
-      setErrorMessage('');
   
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-  
-      console.log('Fetching nonce for address:', address);
+      console.log('Fetching nonce...');
       const nonceResponse = await fetch(`http://localhost:3000/user/nonce/${address}`);
+      console.log('Nonce response status:', nonceResponse.status);
       if (!nonceResponse.ok) {
         const errorText = await nonceResponse.text();
-        console.error('Nonce fetch failed with status:', nonceResponse.status, 'Response:', errorText);
         throw new Error(`Failed to fetch nonce: ${errorText}`);
       }
       const { nonce } = await nonceResponse.json();
       console.log('Received nonce:', nonce);
   
-      console.log('Opening email modal...');
-      setIsEmailModalOpen(true);
-      const email = await new Promise((resolve) => {
-        const handleModalSubmit = (submittedEmail) => resolve(submittedEmail);
-        window.handleModalSubmit = handleModalSubmit;
-      });
-      console.log('Provided email:', email);
-      setIsEmailModalOpen(false);
-      delete window.handleModalSubmit;
-  
+      console.log('Preparing to sign message...');
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
       const message = `Connect wallet with nonce: ${nonce}`;
-      console.log('Message to sign:', message);
-      const signature = await signer.signMessage(message);
+      console.log('Signing message:', message);
+      let signature;
+      try {
+        signature = await signer.signMessage(message);
+      } catch (signErr) {
+        console.error('Signing failed:', signErr.message, signErr.code);
+        throw new Error(`Signature error: ${signErr.message}`);
+      }
       console.log('Generated signature:', signature);
   
-      const payload = { walletAddress: address, signature, email: email || undefined };
-      console.log('Payload to send:', payload);
+      console.log('Sending connect request...');
+      const payload = { walletAddress: address, signature };
       const connectResponse = await fetch('http://localhost:3000/user/connect-wallet', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(payload),
       });
-  
-      const responseText = await connectResponse.text();
-      console.log('Raw backend response:', responseText);
-      if (!connectResponse.ok) {
-        console.error('Connect wallet failed with status:', connectResponse.status, 'Response:', responseText);
-        throw new Error(`Failed to connect wallet: ${responseText}`);
-      }
-      const data = JSON.parse(responseText);
-      console.log('Parsed backend response:', data);
+      console.log('Connect response status:', connectResponse.status);
+      if (!connectResponse.ok) throw new Error(await connectResponse.text());
+      const data = await connectResponse.json();
+      console.log('Connect response:', data);
   
       if (data.token) {
         localStorage.setItem('token', data.token);
         setToken(data.token);
-        console.log('Stored token in localStorage:', data.token);
-        console.log('Wallet connected successfully:', address);
+        console.log('Token stored:', data.token);
+        navigate('/profile');
       } else {
-        console.error('No token in response:', data);
-        setErrorMessage('No token received from server');
+        throw new Error('No token in response');
       }
     } catch (err) {
-      console.error('Wallet connection error:', err.message);
+      console.error('Wallet connection error:', err.message, err.stack);
       setErrorMessage(err.message);
     }
   };
 
+
   const getCurrentWalletConnected = async () => {
-    if (typeof window.ethereum === 'undefined') return;
+    if (!window.ethereum) return;
 
     try {
       const accounts = await window.ethereum.request({ method: 'eth_accounts' });
       if (accounts.length > 0) {
         setWalletAddress(accounts[0]);
-        if (token) console.log('Wallet already connected:', accounts[0]);
+        console.log('Wallet already connected:', accounts[0]);
       }
     } catch (err) {
-      console.error(err.message);
+      console.error('Error checking wallet:', err.message);
     }
   };
 
   const addWalletListener = () => {
-    if (typeof window.ethereum !== 'undefined') {
+    if (window.ethereum) {
       window.ethereum.on('accountsChanged', (accounts) => {
         if (accounts.length > 0) {
           setWalletAddress(accounts[0]);
         } else {
           setWalletAddress('');
           setToken('');
+          localStorage.removeItem('token');
         }
       });
     }
@@ -144,6 +153,17 @@ const Header = () => {
     setIsEmailModalOpen(false);
     setEmailInput('');
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken('');
+    setWalletAddress('');
+    setIsDropdownOpen(false);
+    console.log('Logged out');
+  };
+
+
+
 
   return (
     <header className="fixed top-0 w-full bg-white z-50 shadow-md">
@@ -179,7 +199,6 @@ const Header = () => {
               className={`text-lg font-medium text-gray-700 hover:text-purple-600 transition ${
                 location.pathname === link ? 'text-purple-700 font-semibold' : ''
               }`}
-            
             >
               {title}
             </Link>
@@ -215,7 +234,7 @@ const Header = () => {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <FaUser />
-                {/* <span>{`${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`}</span> */}
+                <span>{`${walletAddress.substring(0, 6)}...${walletAddress.substring(38)}`}</span>
               </button>
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-50">
@@ -227,15 +246,13 @@ const Header = () => {
                     <FaUserCircle className="mr-2" />
                     Profile
                   </Link>
-
-                  <Link
-                    to="/logout"
-                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-purple-100"
-                    onClick={() => setIsDropdownOpen(false)}
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-purple-100"
                   >
                     <FaSignOutAlt className="mr-2" />
                     Logout
-                  </Link>
+                  </button>
                 </div>
               )}
             </div>
@@ -290,5 +307,4 @@ const Header = () => {
     </header>
   );
 };
-
 export default Header;

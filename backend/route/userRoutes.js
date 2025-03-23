@@ -6,6 +6,7 @@ const asyncHandler = require('express-async-handler'); // Add this import
 const Product = require('../models/Product'); // Import Product model
 const Order = require('../models/Order'); // Import Order model
 
+
 router.get('/nonce/:walletAddress', getNonce);
 router.post('/connect-wallet', connectWallet);
 router.get('/profile', authMiddleware, getUser);
@@ -26,8 +27,6 @@ router.get('/purchases', authMiddleware, asyncHandler(async (req, res) => {
   res.json(orders);
 }));
 
-// Add transaction routes later, e.g.:
-// router.get('/transactions', authMiddleware, getUserTransactions);
-// router.post('/transactions', authMiddleware, createTransaction);
+
 
 module.exports = router;

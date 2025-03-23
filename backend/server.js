@@ -58,7 +58,8 @@ app.get('/', (req, res) => res.send('Hello World'));
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+  const status = err.status || 500;
+  res.status(status).json({ message: err.message || 'Internal Server Error' });
 });
 
 // Connect to database and start server

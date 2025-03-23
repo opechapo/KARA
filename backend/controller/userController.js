@@ -35,6 +35,11 @@ const sendWelcomeEmail = async (email) => {
 const getNonce = asyncHandler(async (req, res) => {
   const { walletAddress } = req.params;
 
+  if (!ethers || !ethers.utils || typeof ethers.utils.isAddress !== 'function') {
+    res.status(500);
+    throw new Error('Server configuration error: ethers library not loaded');
+  }
+
   if (!walletAddress || !ethers.utils.isAddress(walletAddress)) {
     res.status(400);
     throw new Error('Invalid wallet address');
@@ -57,19 +62,20 @@ const getNonce = asyncHandler(async (req, res) => {
   res.json({ nonce });
 });
 
+
 // Connect Wallet
 const connectWallet = asyncHandler(async (req, res) => {
   const { walletAddress, signature, email } = req.body;
   console.log('Request body:', req.body);
 
   if (!walletAddress || !signature || !ethers.utils.isAddress(walletAddress)) {
-    res.status(400);
-    throw new Error('Wallet address and signature are required');
+    return res.status(400).json({ message: 'Wallet address and signature are required' });
   }
 
   let user = await User.findOne({ walletAddress: walletAddress.toLowerCase() });
-  if (!user) {
-    // Register new user
+  const isNewUser = !user;
+
+  if (isNewUser) {
     user = new User({
       walletAddress: walletAddress.toLowerCase(),
       email: email ? email.toLowerCase() : undefined,
@@ -77,37 +83,38 @@ const connectWallet = asyncHandler(async (req, res) => {
     });
     await user.save();
     console.log('New user registered:', user);
+  }
 
-    if (email && !user.welcomeEmailSent) {
-      await sendWelcomeEmail(email);
-      user.welcomeEmailSent = true;
-      await user.save();
+  const message = `Connect wallet with nonce: ${user.nonce}`;
+  try {
+    const recoveredAddress = ethers.utils.verifyMessage(message, signature);
+    if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
+      return res.status(401).json({ message: 'Signature does not match' });
     }
-  } else if (email && email.toLowerCase() !== user.email) {
+  } catch (error) {
+    console.error('Signature verification error:', error.message);
+    return res.status(400).json({ message: 'Invalid signature format' });
+  }
+
+  if (email && email.toLowerCase() !== user.email) {
     user.email = email.toLowerCase();
-    if (!user.welcomeEmailSent) {
+    if (isNewUser && !user.welcomeEmailSent) {
       await sendWelcomeEmail(email);
       user.welcomeEmailSent = true;
     }
     await user.save();
   }
 
-  const message = `Connect wallet with nonce: ${user.nonce}`;
-  const recoveredAddress = ethers.utils.verifyMessage(message, signature);
-  if (recoveredAddress.toLowerCase() !== walletAddress.toLowerCase()) {
-    res.status(401);
-    throw new Error('Signature does not match');
-  }
-
   user.nonce = null;
-  const savedUser = await user.save();
-  console.log('Saved user:', savedUser);
+  await user.save();
+  console.log('User after login:', user);
 
   const token = generateToken(user._id);
+  console.log('Generated token:', token); // Add this
   res.cookie('token', token, {
     path: '/',
     httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400),
+    expires: new Date(Date.now() + 1000 * 86400 * 7), // 7 days
   });
   res.json({
     _id: user._id,
@@ -115,6 +122,7 @@ const connectWallet = asyncHandler(async (req, res) => {
     email: user.email,
     avatarUrl: user.avatarUrl,
     token,
+    isNewUser,
   });
 });
 

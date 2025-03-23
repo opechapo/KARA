@@ -37,6 +37,7 @@ import Store from './Components/Store';
 import CreateStore from "./Components/createStore";
 import CreateCollection from './Components/CreateCollection';
 import CreateProduct from './components/CreateProduct';
+// import Login from './components/Login';
 
 
 // Placeholder components for My Listings and My Purchases
@@ -86,6 +87,7 @@ function App() {
       <Route path="/create-store" element={<CreateStore />} />
       <Route path="/my-listings" element={<MyListings />} />
       <Route path="/my-purchases" element={<MyPurchases />} />
+      {/* <Route path="/login" element={<Login />} /> */}
       <Route path="/logout" element={<Logout />} />
       <Route path="/stores" element={<Store />} />
       <Route path="/create-product" element={<CreateProduct />} />
